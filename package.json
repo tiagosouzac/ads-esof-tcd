@@ -1,0 +1,11 @@
+{
+  "name": "ads-esof-tcd",
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "version": "1.0.0",
+  "license": "ISC",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {}
+}
