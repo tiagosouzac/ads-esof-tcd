@@ -9,6 +9,7 @@
     "esModuleInterop": true,
     "moduleDetection": "force",
     "isolatedModules": true,
+    "types": ["vitest/globals"],
     "baseUrl": "."
   }
 }
