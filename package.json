@@ -9,11 +9,17 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch ./index.ts",
+    "migration:create": "typeorm-ts-node-esm migration:create -d ./config/database.ts",
+    "migration:up": "typeorm-ts-node-esm migration:run -d ./config/database.ts",
+    "migration:show": "typeorm-ts-node-esm migration:show -d ./config/database.ts",
     "test": "vitest"
   },
   "dependencies": {
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "reflect-metadata": "^0.2.2",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.22",
     "zod": "^3.24.3"
   },
   "devDependencies": {
@@ -21,6 +27,7 @@
     "@types/node": "^22.14.1",
     "@types/supertest": "^6.0.3",
     "supertest": "^7.1.0",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.3",
     "typescript": "^5.8.3",
     "vitest": "^3.1.1"

@@ -9,6 +9,8 @@
     "esModuleInterop": true,
     "moduleDetection": "force",
     "isolatedModules": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "types": ["vitest/globals"],
     "baseUrl": "."
   }
