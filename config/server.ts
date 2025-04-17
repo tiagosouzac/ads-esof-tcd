@@ -1,6 +1,8 @@
 import express, { type Express } from "express";
 import { ExceptionHandler } from "app/middlewares/exception-handler";
 import { RouteNotFound } from "app/middlewares/route-not-found";
+import { ViewRenderer } from "app/middlewares/view-renderer";
+import path from "path";
 
 class Server {
   private server: Express;
@@ -10,6 +12,7 @@ class Server {
     this.server = express();
     this.port = port ?? 3000;
     this.middlewares();
+    this.configureViewRendering();
     this.routes();
     this.handleRouteNotFound();
     this.exceptionHandler();
@@ -19,10 +22,13 @@ class Server {
     this.server.use(express.json());
   }
 
+  private configureViewRendering() {
+    const viewsPath = path.join(process.cwd(), "app/views");
+    this.server.use(ViewRenderer.handle(viewsPath));
+  }
+
   private routes() {
-    this.server.get("/", (req, res) => {
-      res.send("Hello World!");
-    });
+    this.server.get("/", (_, response) => response.render("index"));
   }
 
   private handleRouteNotFound() {

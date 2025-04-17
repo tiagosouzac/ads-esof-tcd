@@ -13,7 +13,8 @@
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "EditorConfig.EditorConfig",
-        "cweijan.vscode-database-client2"
+        "cweijan.vscode-database-client2",
+        "AdonisJS.vscode-edge"
       ]
     }
   }
