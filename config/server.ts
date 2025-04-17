@@ -1,4 +1,6 @@
 import express, { type Express } from "express";
+import { ExceptionHandler } from "app/middlewares/exception-handler";
+import { RouteNotFound } from "app/middlewares/route-not-found";
 
 class Server {
   private server: Express;
@@ -9,6 +11,8 @@ class Server {
     this.port = port ?? 3000;
     this.middlewares();
     this.routes();
+    this.handleRouteNotFound();
+    this.exceptionHandler();
   }
 
   private middlewares() {
@@ -19,6 +23,14 @@ class Server {
     this.server.get("/", (req, res) => {
       res.send("Hello World!");
     });
+  }
+
+  private handleRouteNotFound() {
+    this.server.use(RouteNotFound.handle);
+  }
+
+  private exceptionHandler() {
+    this.server.use(ExceptionHandler.handle);
   }
 
   listen() {
