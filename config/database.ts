@@ -5,10 +5,15 @@ class Database {
 
   constructor() {
     this.dataSource = new DataSource({
-      type: "sqlite",
-      database: "infra/db.sqlite",
+      type: "postgres",
+      host: "localhost",
+      port: 5432,
+      username: "local_user",
+      password: "local_password",
+      database: "local_db",
       synchronize: false,
       logging: false,
+      entities: ["app/entities/**/*.entity.ts"],
       migrations: ["infra/migrations/**/*.ts"],
     });
   }
