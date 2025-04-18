@@ -9,6 +9,11 @@ class Env {
       .enum(["development", "test", "production"])
       .default("development"),
     PORT: z.coerce.number().default(3000),
+    DATABASE_HOST: z.string().default("localhost"),
+    DATABASE_PORT: z.coerce.number().default(5432),
+    DATABASE_NAME: z.string().default("local_db"),
+    DATABASE_USERNAME: z.string().default("local_user"),
+    DATABASE_PASSWORD: z.string().default("local_password"),
   });
 
   constructor() {
