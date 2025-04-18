@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2023",
-    "module": "Preserve",
+    "module": "CommonJS",
     "lib": ["ES2023"],
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -9,8 +9,6 @@
     "esModuleInterop": true,
     "moduleDetection": "force",
     "isolatedModules": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "types": ["vitest/globals"],
     "baseUrl": "."
   }

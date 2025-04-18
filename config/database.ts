@@ -1,42 +1,39 @@
-import { DataSource } from "typeorm";
+import pg, { Query, QueryResult, QueryResultRow } from "pg";
 import { env } from "config/env";
 
 class Database {
-  private dataSource: DataSource;
+  private client: pg.Client | null = null;
 
-  constructor() {
-    this.dataSource = new DataSource({
-      type: "postgres",
-      host: env.get("DATABASE_HOST"),
-      port: env.get("DATABASE_PORT"),
-      database: env.get("DATABASE_NAME"),
-      username: env.get("DATABASE_USERNAME"),
-      password: env.get("DATABASE_PASSWORD"),
-      synchronize: false,
-      logging: false,
-      entities: ["app/entities/**/*.entity.ts"],
-      migrations: ["infra/migrations/**/*.ts"],
-    });
-  }
+  async connect() {
+    if (!this.client) {
+      this.client = new pg.Client({
+        host: env.get("DATABASE_HOST"),
+        port: env.get("DATABASE_PORT"),
+        database: env.get("DATABASE_NAME"),
+        user: env.get("DATABASE_USERNAME"),
+        password: env.get("DATABASE_PASSWORD"),
+      });
 
-  async initialize() {
-    try {
-      await this.dataSource.initialize();
-      console.log("Database connected successfully! 🚀");
-    } catch (error) {
-      console.error("Error during database initialization:", error);
-      throw error;
+      await this.client.connect();
     }
   }
 
-  getDataSource() {
-    return this.dataSource;
+  async query<T extends QueryResultRow>(
+    query: string,
+    params: unknown[] = []
+  ): Promise<QueryResult<T>["rows"]> {
+    try {
+      await this.connect();
+      const result = await this.client!.query(query, params);
+      return result.rows;
+    } catch (error) {
+      console.error("Database query error:", error);
+      throw error;
+    } finally {
+      await this.client?.end();
+      this.client = null;
+    }
   }
 }
 
-const database = new Database();
-
-export { database };
-
-// Used by TypeORM to perform migrations
-export default database.getDataSource();
+export { Database };
