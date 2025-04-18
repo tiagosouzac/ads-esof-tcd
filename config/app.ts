@@ -20,7 +20,13 @@ class App {
   }
 
   private setupRoutes() {
-    this.server.route("/", (_, response) => response.render("index"));
+    const router = express.Router();
+
+    router.get("/", (_, response) => {
+      return response.render("index");
+    });
+
+    this.server.registerRoute("/", router);
   }
 
   private setupMiddlewares() {

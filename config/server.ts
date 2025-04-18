@@ -2,6 +2,7 @@ import express, {
   type Express,
   RequestHandler,
   ErrorRequestHandler,
+  Router,
 } from "express";
 
 class Server {
@@ -18,7 +19,7 @@ class Server {
     return this;
   }
 
-  public route(path: string, handler: RequestHandler) {
+  public registerRoute(path: string, handler: Router) {
     this.server.use(path, handler);
     return this;
   }

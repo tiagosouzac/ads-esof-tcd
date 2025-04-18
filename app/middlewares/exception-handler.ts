@@ -13,13 +13,13 @@ class ExceptionHandler {
     [UnexpectedErrorException, ExceptionHandler.handleUnexpectError],
   ]);
 
-  static handle(
+  static async handle(
     error: Error,
     _: Request,
     response: Response,
     __: NextFunction
   ) {
-    console.error(error.stack);
+    console.error(error);
 
     const handler =
       ExceptionHandler.handlers.get(error.constructor) ??
@@ -27,7 +27,9 @@ class ExceptionHandler {
 
     const exception = handler(error);
 
-    response.status(exception.status).json(exception);
+    await response
+      .status(exception.status)
+      .render(`errors/${exception.status}`);
   }
 
   private static handleNotFound(error: NotFoundException) {
