@@ -1,5 +1,5 @@
 import { type Request, type Response, type NextFunction } from "express";
-import { Views } from "config/views";
+import { Edge } from "edge.js";
 
 declare global {
   namespace Express {
@@ -11,7 +11,8 @@ declare global {
 
 class ViewRenderer {
   static handle(viewsPath: string) {
-    const views = new Views(viewsPath);
+    const edge = new Edge();
+    edge.mount(viewsPath);
 
     return function (_: Request, response: Response, next: NextFunction) {
       response.render = async function (
@@ -19,7 +20,7 @@ class ViewRenderer {
         data: Record<string, any> = {}
       ) {
         try {
-          const html = await views.render(view, data);
+          const html = await edge.render(view, data);
           response.type("html").send(html);
         } catch (error) {
           next(error);

@@ -11,7 +11,6 @@ class App {
   constructor(port?: number) {
     this.server = new Server(port);
     this.setupMiddlewares();
-    this.setupViewRenderer();
     this.setupRoutes();
     this.setupErrorHandling();
   }
@@ -27,12 +26,10 @@ class App {
   private setupMiddlewares() {
     this.server
       .setMiddleware(express.json())
-      .setMiddleware(express.static(path.join(process.cwd(), "static")));
-  }
-
-  private setupViewRenderer() {
-    const viewsPath = path.join(process.cwd(), "app/views");
-    this.server.setMiddleware(ViewRenderer.handle(viewsPath));
+      .setMiddleware(express.static(path.join(process.cwd(), "static")))
+      .setMiddleware(
+        ViewRenderer.handle(path.join(process.cwd(), "app/views"))
+      );
   }
 
   private setupErrorHandling() {
