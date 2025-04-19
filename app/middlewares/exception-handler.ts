@@ -27,9 +27,7 @@ class ExceptionHandler {
 
     const exception = handler(error);
 
-    await response
-      .status(exception.status)
-      .render(`errors/${exception.status}`);
+    response.status(exception.status).json(exception.error);
   }
 
   private static handleNotFound(error: NotFoundException) {

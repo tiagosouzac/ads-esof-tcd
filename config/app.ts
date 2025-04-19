@@ -1,9 +1,7 @@
 import express from "express";
-import path from "path";
 import { Server } from "./server";
 import { ExceptionHandler } from "app/middlewares/exception-handler";
 import { RouteNotFound } from "app/middlewares/route-not-found";
-import { ViewRenderer } from "app/middlewares/view-renderer";
 
 class App {
   private server: Server;
@@ -32,10 +30,7 @@ class App {
   private setupMiddlewares() {
     this.server
       .setMiddleware(express.json())
-      .setMiddleware(express.static(path.join(process.cwd(), "static")))
-      .setMiddleware(
-        ViewRenderer.handle(path.join(process.cwd(), "app/views"))
-      );
+      .setMiddleware(express.urlencoded({ extended: true }));
   }
 
   private setupErrorHandling() {
