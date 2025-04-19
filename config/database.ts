@@ -1,37 +1,53 @@
-import pg, { Query, QueryResult, QueryResultRow } from "pg";
+import pg, { Pool, QueryResult, QueryResultRow } from "pg";
 import { env } from "config/env";
 
 class Database {
-  private client: pg.Client | null = null;
+  private static pool: Pool | null = null;
 
-  async connect() {
-    if (!this.client) {
-      this.client = new pg.Client({
+  private getPool(): Pool {
+    if (!Database.pool) {
+      Database.pool = new pg.Pool({
         host: env.get("DATABASE_HOST"),
         port: env.get("DATABASE_PORT"),
         database: env.get("DATABASE_NAME"),
         user: env.get("DATABASE_USERNAME"),
         password: env.get("DATABASE_PASSWORD"),
+        max: 20,
+        idleTimeoutMillis: 30000,
       });
 
-      await this.client.connect();
+      Database.pool.on("error", (err) => {
+        console.error("Unexpected error on idle client", err);
+      });
+
+      process.on("SIGINT", () => {
+        this.closePool();
+        process.exit(0);
+      });
     }
+    return Database.pool;
   }
 
   async query<T extends QueryResultRow>(
     query: string,
     params: unknown[] = []
   ): Promise<QueryResult<T>["rows"]> {
+    const client = await this.getPool().connect();
     try {
-      await this.connect();
-      const result = await this.client!.query(query, params);
+      const result = await client.query<T>(query, params);
       return result.rows;
     } catch (error) {
       console.error("Database query error:", error);
       throw error;
     } finally {
-      await this.client?.end();
-      this.client = null;
+      client.release();
+    }
+  }
+
+  async closePool(): Promise<void> {
+    if (Database.pool) {
+      await Database.pool.end();
+      Database.pool = null;
     }
   }
 }
