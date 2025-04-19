@@ -8,7 +8,7 @@ import { Exception } from "app/exceptions/exception";
 
 type HandlerFunction = (error: Exception) => {
   status: number;
-  error: { name: string; message: string; details?: Record<string, any> };
+  error: { name: string; message: string; details?: Record<string, unknown> };
 };
 
 class ExceptionHandler {
@@ -40,16 +40,6 @@ class ExceptionHandler {
     response.status(exception.status).json(exception.error);
   }
 
-  private static handleNotFound(error: NotFoundException) {
-    return {
-      status: 404,
-      error: {
-        name: error.name,
-        message: error.message,
-      },
-    };
-  }
-
   private static handleUnauthorized(error: UnauthorizedException) {
     return {
       status: 401,
@@ -63,6 +53,16 @@ class ExceptionHandler {
   private static handleForbidden(error: ForbiddenException) {
     return {
       status: 403,
+      error: {
+        name: error.name,
+        message: error.message,
+      },
+    };
+  }
+
+  private static handleNotFound(error: NotFoundException) {
+    return {
+      status: 404,
       error: {
         name: error.name,
         message: error.message,
