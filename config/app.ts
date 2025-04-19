@@ -1,11 +1,9 @@
 import express from "express";
-import { Server } from "./server";
+import { Server } from "config/server";
 import { ExceptionHandler } from "app/middlewares/exception-handler.middleware";
 import { RouteNotFound } from "app/middlewares/route-not-found.middleware";
-import { UserController } from "app/controllers/user.controller";
-import { SessionController } from "app/controllers/session.controller";
-import { AuthenticationMiddleware } from "app/middlewares/authentication.middleware";
-import { AuthorizationMiddleware } from "app/middlewares/authorization.middleware";
+import { UserRoutes } from "app/routes/user.routes";
+import { SessionRoutes } from "app/routes/session.routes";
 
 class App {
   private server: Server;
@@ -22,49 +20,11 @@ class App {
   }
 
   private setupRoutes() {
-    const userController = new UserController();
-    const sessionController = new SessionController();
+    const userRoutes = new UserRoutes();
+    const sessionRoutes = new SessionRoutes();
 
-    const sessionRouter = express.Router();
-    sessionRouter.post("/", sessionController.create);
-    sessionRouter.delete("/", sessionController.delete);
-
-    const userRouter = express.Router();
-
-    userRouter.use(AuthenticationMiddleware.handle);
-
-    userRouter.get(
-      "/",
-      AuthorizationMiddleware.hasRole("admin", "hr", "manager"),
-      userController.list
-    );
-
-    userRouter.get(
-      "/:id",
-      AuthorizationMiddleware.hasRole("admin", "hr", "manager", "user"),
-      userController.get
-    );
-
-    userRouter.post(
-      "/",
-      AuthorizationMiddleware.hasRole("admin", "hr"),
-      userController.create
-    );
-
-    userRouter.put(
-      "/:id",
-      AuthorizationMiddleware.hasRole("admin", "hr"),
-      userController.update
-    );
-
-    userRouter.delete(
-      "/:id",
-      AuthorizationMiddleware.hasRole("admin"),
-      userController.delete
-    );
-
-    this.server.registerRoute("/sessions", sessionRouter);
-    this.server.registerRoute("/users", userRouter);
+    this.server.registerRoute("/users", userRoutes.getRouter());
+    this.server.registerRoute("/sessions", sessionRoutes.getRouter());
   }
 
   private setupMiddlewares() {
