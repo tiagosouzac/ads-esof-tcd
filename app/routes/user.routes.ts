@@ -1,16 +1,10 @@
-import { Routes } from "app/routes/routes";
+import { Routes } from "core/routes";
 import { UserController } from "app/controllers/user.controller";
 import { AuthenticationMiddleware } from "app/middlewares/authentication.middleware";
 import { AuthorizationMiddleware } from "app/middlewares/authorization.middleware";
 
 class UserRoutes extends Routes {
-  private controller: UserController;
-
-  constructor() {
-    super();
-    this.controller = new UserController();
-    this.registerRoutes();
-  }
+  private readonly controller = new UserController();
 
   protected registerRoutes(): void {
     this.middleware(AuthenticationMiddleware.handle);
@@ -18,31 +12,31 @@ class UserRoutes extends Routes {
     this.get(
       "/",
       AuthorizationMiddleware.hasRole("admin", "hr", "manager"),
-      this.controller.list
+      (request, response) => this.controller.list(request, response)
     );
 
     this.get(
       "/:id",
       AuthorizationMiddleware.hasRole("admin", "hr", "manager", "user"),
-      this.controller.get
+      (request, response) => this.controller.get(request, response)
     );
 
     this.post(
       "/",
       AuthorizationMiddleware.hasRole("admin", "hr"),
-      this.controller.create
+      (request, response) => this.controller.create(request, response)
     );
 
     this.put(
       "/:id",
       AuthorizationMiddleware.hasRole("admin", "hr"),
-      this.controller.update
+      (request, response) => this.controller.update(request, response)
     );
 
     this.delete(
       "/:id",
       AuthorizationMiddleware.hasRole("admin"),
-      this.controller.delete
+      (request, response) => this.controller.delete(request, response)
     );
   }
 }

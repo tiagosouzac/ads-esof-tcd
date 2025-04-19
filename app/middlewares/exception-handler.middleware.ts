@@ -4,7 +4,7 @@ import { UnauthorizedException } from "app/exceptions/unauthorized.exception";
 import { ForbiddenException } from "app/exceptions/forbidden.exception";
 import { UnexpectedErrorException } from "app/exceptions/unexpected-error.exception";
 import { UnprocessableContentException } from "app/exceptions/unprocessable-content.exception";
-import { Exception } from "app/exceptions/exception";
+import { Exception } from "core/exception";
 
 type HandlerFunction = (error: Exception) => {
   status: number;

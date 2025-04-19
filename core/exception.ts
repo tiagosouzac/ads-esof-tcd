@@ -1,4 +1,4 @@
-class Exception extends Error {
+abstract class Exception extends Error {
   readonly details?: Record<string, unknown>;
 
   constructor(message: string, details?: Record<string, unknown>) {

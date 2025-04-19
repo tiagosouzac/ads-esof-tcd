@@ -1,21 +1,13 @@
 import type { Request, Response } from "express";
 import { UserService } from "app/services/user.service";
 import { UserValidator } from "app/validators/user.validator";
-import { User } from "app/models/user.model";
 import { AuthorizationService } from "app/services/authorization.service";
+import { Controller } from "core/controller";
 
-class UserController {
-  constructor(
-    private readonly validator = new UserValidator(),
-    private readonly service = new UserService(),
-    private readonly authService = new AuthorizationService()
-  ) {
-    this.list = this.list.bind(this);
-    this.get = this.get.bind(this);
-    this.create = this.create.bind(this);
-    this.update = this.update.bind(this);
-    this.delete = this.delete.bind(this);
-  }
+class UserController extends Controller {
+  private readonly validator = new UserValidator();
+  private readonly service = new UserService();
+  private readonly authService = new AuthorizationService();
 
   async list(_: Request, response: Response) {
     const users = await this.service.list();

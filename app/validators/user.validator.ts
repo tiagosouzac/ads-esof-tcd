@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { UnprocessableContentException } from "app/exceptions/unprocessable-content.exception";
+import { Validator } from "core/validator";
 
-class UserValidator {
-  private readonly schema = z.object({
+class UserValidator extends Validator {
+  readonly schema = z.object({
     id: z.coerce.number(),
     name: z.string().min(1),
     email: z.string().email(),
@@ -12,7 +13,7 @@ class UserValidator {
     updatedAt: z.coerce.date(),
   });
 
-  async get(data: unknown) {
+  get(data: unknown) {
     try {
       return this.schema.pick({ id: true }).parse(data);
     } catch (error) {
@@ -27,7 +28,7 @@ class UserValidator {
     }
   }
 
-  async create(data: unknown) {
+  create(data: unknown) {
     try {
       return this.schema
         .omit({ id: true, createdAt: true, updatedAt: true })
@@ -44,7 +45,7 @@ class UserValidator {
     }
   }
 
-  async update(data: unknown) {
+  update(data: unknown) {
     try {
       return this.schema
         .omit({ createdAt: true, updatedAt: true })
@@ -63,7 +64,7 @@ class UserValidator {
     }
   }
 
-  async delete(data: unknown) {
+  delete(data: unknown) {
     try {
       return this.schema.pick({ id: true }).parse(data);
     } catch (error) {

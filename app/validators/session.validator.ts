@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { UnprocessableContentException } from "app/exceptions/unprocessable-content.exception";
+import { Validator } from "core/validator";
 
-class SessionValidator {
-  private readonly schema = z.object({
+class SessionValidator extends Validator {
+  readonly schema = z.object({
     id: z.coerce.number(),
     email: z.string().email(),
     password: z.string().min(8),

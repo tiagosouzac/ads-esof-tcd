@@ -1,4 +1,4 @@
-import { Exception } from "app/exceptions/exception";
+import { Exception } from "core/exception";
 
 class ForbiddenException extends Exception {
   constructor(message = "You don't have permission to access this resource") {

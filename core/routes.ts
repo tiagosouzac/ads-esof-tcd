@@ -5,6 +5,7 @@ abstract class Routes {
 
   constructor() {
     this.router = Router();
+    this.registerRoutes();
   }
 
   protected middleware(middleware: RequestHandler) {

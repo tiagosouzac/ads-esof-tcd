@@ -1,4 +1,4 @@
-import { Exception } from "app/exceptions/exception";
+import { Exception } from "core/exception";
 
 class UnprocessableContentException extends Exception {
   constructor(
