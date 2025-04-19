@@ -1,6 +1,9 @@
 import type { Request, Response, NextFunction } from "express";
-import { NotFoundException } from "app/exceptions/not-found";
-import { UnexpectedErrorException } from "app/exceptions/unexpected-error";
+import { NotFoundException } from "app/exceptions/not-found.exception";
+import { UnauthorizedException } from "app/exceptions/unauthorized.exception";
+import { ForbiddenException } from "app/exceptions/forbidden.exception";
+import { UnexpectedErrorException } from "app/exceptions/unexpected-error.exception";
+import { UnprocessableContentException } from "app/exceptions/unprocessable-content.exception";
 import { Exception } from "app/exceptions/exception";
 
 type HandlerFunction = (error: Exception) => {
@@ -11,6 +14,12 @@ type HandlerFunction = (error: Exception) => {
 class ExceptionHandler {
   private static handlers: Map<Function, HandlerFunction> = new Map([
     [NotFoundException, ExceptionHandler.handleNotFound],
+    [UnauthorizedException, ExceptionHandler.handleUnauthorized],
+    [ForbiddenException, ExceptionHandler.handleForbidden],
+    [
+      UnprocessableContentException,
+      ExceptionHandler.handleUnprocessableContent,
+    ],
     [UnexpectedErrorException, ExceptionHandler.handleUnexpectError],
   ]);
 
@@ -37,6 +46,39 @@ class ExceptionHandler {
       error: {
         name: error.name,
         message: error.message,
+      },
+    };
+  }
+
+  private static handleUnauthorized(error: UnauthorizedException) {
+    return {
+      status: 401,
+      error: {
+        name: error.name,
+        message: error.message,
+      },
+    };
+  }
+
+  private static handleForbidden(error: ForbiddenException) {
+    return {
+      status: 403,
+      error: {
+        name: error.name,
+        message: error.message,
+      },
+    };
+  }
+
+  private static handleUnprocessableContent(
+    error: UnprocessableContentException
+  ) {
+    return {
+      status: 422,
+      error: {
+        name: error.name,
+        message: error.message,
+        details: error.details,
       },
     };
   }

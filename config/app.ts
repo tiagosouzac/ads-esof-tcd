@@ -1,7 +1,7 @@
 import express from "express";
 import { Server } from "./server";
-import { ExceptionHandler } from "app/middlewares/exception-handler";
-import { RouteNotFound } from "app/middlewares/route-not-found";
+import { ExceptionHandler } from "app/middlewares/exception-handler.middleware";
+import { RouteNotFound } from "app/middlewares/route-not-found.middleware";
 
 class App {
   private server: Server;
