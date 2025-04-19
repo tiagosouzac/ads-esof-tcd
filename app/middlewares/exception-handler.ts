@@ -1,10 +1,11 @@
 import type { Request, Response, NextFunction } from "express";
 import { NotFoundException } from "app/exceptions/not-found";
 import { UnexpectedErrorException } from "app/exceptions/unexpected-error";
+import { Exception } from "app/exceptions/exception";
 
-type HandlerFunction = (error: Error) => {
+type HandlerFunction = (error: Exception) => {
   status: number;
-  error: { name: string; message: string };
+  error: { name: string; message: string; details?: Record<string, any> };
 };
 
 class ExceptionHandler {
@@ -14,7 +15,7 @@ class ExceptionHandler {
   ]);
 
   static async handle(
-    error: Error,
+    error: Exception | Error,
     _: Request,
     response: Response,
     __: NextFunction
@@ -40,7 +41,7 @@ class ExceptionHandler {
     };
   }
 
-  private static handleUnexpectError(error: Error) {
+  private static handleUnexpectError(error: UnexpectedErrorException) {
     return {
       status: 500,
       error: {
