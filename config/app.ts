@@ -4,6 +4,7 @@ import { ExceptionHandler } from "app/middlewares/exception-handler.middleware";
 import { RouteNotFound } from "app/middlewares/route-not-found.middleware";
 import { UserRoutes } from "app/routes/user.routes";
 import { SessionRoutes } from "app/routes/session.routes";
+import { EntryRoutes } from "app/routes/entry.routes";
 
 class App {
   private server: Server;
@@ -22,9 +23,11 @@ class App {
   private setupRoutes() {
     const userRoutes = new UserRoutes();
     const sessionRoutes = new SessionRoutes();
+    const entryRoutes = new EntryRoutes();
 
     this.server.registerRoute("/users", userRoutes.getRouter());
     this.server.registerRoute("/sessions", sessionRoutes.getRouter());
+    this.server.registerRoute("/entries", entryRoutes.getRouter());
   }
 
   private setupMiddlewares() {

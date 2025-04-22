@@ -6,11 +6,11 @@ import { Controller } from "core/controller";
 
 class UserController extends Controller {
   private readonly validator = new UserValidator();
-  private readonly service = new UserService();
+  private readonly userService = new UserService();
   private readonly authService = new AuthorizationService();
 
   async list(_: Request, response: Response) {
-    const users = await this.service.list();
+    const users = await this.userService.list();
 
     response.json({
       users: users.map((user) => ({
@@ -27,7 +27,7 @@ class UserController extends Controller {
 
     this.authService.canAccessResource(request.user!, id);
 
-    const user = await this.service.get(id);
+    const user = await this.userService.get(id);
 
     response.json({
       user: {
@@ -42,7 +42,7 @@ class UserController extends Controller {
   async create(request: Request, response: Response) {
     const validatedData = await this.validator.create(request.body);
 
-    const createdUser = await this.service.create({
+    const createdUser = await this.userService.create({
       name: validatedData.name,
       email: validatedData.email,
       password: validatedData.password,
@@ -65,7 +65,7 @@ class UserController extends Controller {
       ...request.body,
     });
 
-    const user = await this.service.update(validatedData.id, {
+    const user = await this.userService.update(validatedData.id, {
       name: validatedData.name,
       email: validatedData.email,
       password: validatedData.password,
@@ -85,7 +85,7 @@ class UserController extends Controller {
   async delete(request: Request, response: Response) {
     const { id } = await this.validator.delete({ id: request.params.id });
 
-    await this.service.delete(id);
+    await this.userService.delete(id);
 
     response.status(204).end();
   }
