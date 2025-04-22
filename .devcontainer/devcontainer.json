@@ -1,5 +1,5 @@
 {
-  "dockerComposeFile": ["../infra/compose.yml", "./compose.yml"],
+  "dockerComposeFile": ["../backend/infra/compose.yml", "./compose.yml"],
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "customizations": {
