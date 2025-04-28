@@ -28,7 +28,7 @@ const employeeFormValidationSchema = z.object({
       "O endereço de e-mail informado não é válido. Verifique e tente novamente."
     ),
   manager: z.string({
-    required_error: "Selecione o gerente responsável pelo funcionário.",
+    required_error: "Selecione o gestor responsável pelo funcionário.",
   }),
 });
 
@@ -105,12 +105,12 @@ export function EmployeeForm(props: React.ComponentProps<"form">) {
           name="manager"
           render={({ field, fieldState }) => (
             <FormItem>
-              <FormLabel htmlFor="manager">Gerente Responsável</FormLabel>
+              <FormLabel htmlFor="manager">Gestor Responsável</FormLabel>
 
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger id="manager">
-                    <SelectValue placeholder="Selecione o gerente responsável" />
+                  <SelectTrigger id="manager" className="w-full">
+                    <SelectValue placeholder="Selecione o gestor responsável" />
                   </SelectTrigger>
                 </FormControl>
 
@@ -125,7 +125,7 @@ export function EmployeeForm(props: React.ComponentProps<"form">) {
                 <FormMessage />
               ) : (
                 <FormDescription>
-                  Escolha o gerente responsável por supervisionar o funcionário.
+                  Escolha o gestor responsável por supervisionar o funcionário.
                 </FormDescription>
               )}
             </FormItem>

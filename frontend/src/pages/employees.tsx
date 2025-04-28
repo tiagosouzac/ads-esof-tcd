@@ -58,7 +58,7 @@ function Employees() {
 
   return (
     <>
-      <div className="flex justify-between items-end">
+      <div className="flex justify-between items-end gap-6">
         <div className="space-y-1">
           <h1 className="text-2xl font-semibold tracking-tight">
             Funcionários
@@ -107,9 +107,9 @@ function Employees() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Nome</TableHead>
-            <TableHead>E-mail</TableHead>
-            <TableHead>Gestor</TableHead>
+            <TableHead className="w-1/4">Nome</TableHead>
+            <TableHead className="w-1/4">E-mail</TableHead>
+            <TableHead className="w-1/4">Gestor</TableHead>
             <TableHead>
               <span className="sr-only">Ações</span>
             </TableHead>
