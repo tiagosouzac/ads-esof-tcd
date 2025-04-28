@@ -4,11 +4,18 @@ import { Dashboard } from "@/pages/dashboard";
 import { Employees } from "@/pages/employees";
 import { Projects } from "@/pages/projects";
 import { Login } from "@/pages/login";
+import { NavigationProvider } from "@/contexts/navigation";
 
 function App() {
   return (
     <Routes>
-      <Route element={<DashboardLayout />}>
+      <Route
+        element={
+          <NavigationProvider>
+            <DashboardLayout />
+          </NavigationProvider>
+        }
+      >
         <Route index element={<Dashboard />} />
         <Route path="employees" element={<Employees />} />
         <Route path="projects" element={<Projects />} />

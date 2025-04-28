@@ -3,15 +3,19 @@ import {
   BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
-  // BreadcrumbSeparator,
-  // BreadcrumbPage,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
 } from "@/components/breadcrumb";
 import { SidebarInset, SidebarProvider } from "@/components/sidebar";
+import { useNavigation } from "@/hooks/use-navigation";
 import { AppSidebar } from "@/partials/app-sidebar";
 import { LayoutDashboard } from "lucide-react";
 import { Link, Outlet } from "react-router";
+import { Fragment } from "react";
 
 function DashboardLayout() {
+  const { breadcrumb } = useNavigation();
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -28,10 +32,26 @@ function DashboardLayout() {
                     </Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
-                {/* <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem> */}
+
+                {breadcrumb.length > 0 && <BreadcrumbSeparator />}
+
+                {breadcrumb.map((item, index) => (
+                  <Fragment key={item.label}>
+                    <BreadcrumbItem>
+                      {item.url ? (
+                        <BreadcrumbLink className="line-clamp-1" asChild>
+                          <Link to={item.url}>{item.label}</Link>
+                        </BreadcrumbLink>
+                      ) : (
+                        <BreadcrumbPage className="line-clamp-1">
+                          {item.label}
+                        </BreadcrumbPage>
+                      )}
+                    </BreadcrumbItem>
+
+                    {index < breadcrumb.length - 1 && <BreadcrumbSeparator />}
+                  </Fragment>
+                ))}
               </BreadcrumbList>
             </Breadcrumb>
           </div>
