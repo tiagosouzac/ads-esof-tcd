@@ -14,7 +14,9 @@
         "esbenp.prettier-vscode",
         "EditorConfig.EditorConfig",
         "cweijan.vscode-database-client2",
-        "AdonisJS.vscode-edge"
+        "AdonisJS.vscode-edge",
+        "csstools.postcss",
+        "bradlc.vscode-tailwindcss"
       ]
     }
   }
