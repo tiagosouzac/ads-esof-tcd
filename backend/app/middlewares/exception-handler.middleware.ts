@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { InternalServerErrorException } from "../exceptions/internal-server-error.exception";
+import { UnprocessableContentException } from "../exceptions/unprocessable-content.exception";
+import { ConflictException } from "../exceptions/conflict.exception";
+import { NotFoundException } from "../exceptions/not-found.exception";
 
 class ExceptionHandler {
   static handle(
@@ -10,19 +13,24 @@ class ExceptionHandler {
   ) {
     console.error(error.stack);
 
-    if (error instanceof InternalServerErrorException) {
+    if (
+      error instanceof NotFoundException ||
+      error instanceof ConflictException ||
+      error instanceof UnprocessableContentException ||
+      error instanceof InternalServerErrorException
+    ) {
       response.status(error.statusCode).json({
-        status: "error",
-        message: error.name,
-        error: error.message,
+        name: error.name,
+        message: error.message,
         details: error.details,
       });
+
+      return;
     }
 
     response.status(500).json({
-      status: "error",
-      message: error.name,
-      error: error.message,
+      name: error.name,
+      message: error.message,
     });
   }
 }
