@@ -1,0 +1,22 @@
+{
+  "name": "TCD",
+  "dockerComposeFile": [
+    "../backend/infra/database/compose.yml",
+    "./compose.yml"
+  ],
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "csstools.postcss",
+        "cweijan.vscode-database-client2",
+        "jripouteau.adonis-vscode-extension",
+        "jripouteau.japa-vscode",
+        "Prisma.prisma"
+      ]
+    }
+  }
+}
