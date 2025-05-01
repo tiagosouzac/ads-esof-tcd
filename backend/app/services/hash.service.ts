@@ -1,16 +1,17 @@
 import bcrypt from "bcrypt";
+import { ComparePasswordDTO, HashPasswordDTO } from "../dtos/hash.dto";
 
 class HashService {
   private static saltRounds = 10;
 
-  public static async hashPassword(password: string): Promise<string> {
+  public static hashPassword({ password }: HashPasswordDTO) {
     return bcrypt.hash(password, this.saltRounds);
   }
 
-  public static async comparePassword(
-    password: string,
-    hashedPassword: string
-  ): Promise<boolean> {
+  public static async comparePassword({
+    password,
+    hashedPassword,
+  }: ComparePasswordDTO) {
     return bcrypt.compare(password, hashedPassword);
   }
 }

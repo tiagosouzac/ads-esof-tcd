@@ -6,11 +6,11 @@ class UserRoutes {
   private static readonly routes = Router();
   private static readonly path = "/users";
 
-  public static getPath(): string {
+  public static getPath() {
     return this.path;
   }
 
-  public static getRoutes(): Router {
+  public static getRoutes() {
     return this.routes
       .get("/", this.controller.list.bind(this.controller))
       .get("/:id", this.controller.find.bind(this.controller))

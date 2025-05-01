@@ -7,6 +7,7 @@ class Env {
     DATABASE_URL: z.string(),
     SHADOW_DATABASE_URL: z.string(),
     JWT_SECRET: z.string(),
+    JWT_EXPIRATION: z.coerce.number().default(3600),
   });
 
   private static env: z.infer<typeof this.schema>;

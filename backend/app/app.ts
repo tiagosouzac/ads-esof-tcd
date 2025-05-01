@@ -3,6 +3,7 @@ import cors from "cors";
 import { Database } from "../config/database";
 import { ExceptionHandler } from "./middlewares/exception-handler.middleware";
 import { UserRoutes } from "./routes/user.routes";
+import { AuthRoutes } from "./routes/auth.routes";
 
 class App {
   private app: express.Application;
@@ -26,6 +27,7 @@ class App {
 
   setupRoutes() {
     this.app.use(UserRoutes.getPath(), UserRoutes.getRoutes());
+    this.app.use(AuthRoutes.getPath(), AuthRoutes.getRoutes());
   }
 
   setupExceptionHandler() {

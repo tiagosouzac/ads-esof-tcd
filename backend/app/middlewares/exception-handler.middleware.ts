@@ -3,6 +3,7 @@ import { InternalServerErrorException } from "../exceptions/internal-server-erro
 import { UnprocessableContentException } from "../exceptions/unprocessable-content.exception";
 import { ConflictException } from "../exceptions/conflict.exception";
 import { NotFoundException } from "../exceptions/not-found.exception";
+import { UnauthorizedException } from "../exceptions/unauthorized.exception";
 
 class ExceptionHandler {
   static handle(
@@ -14,6 +15,7 @@ class ExceptionHandler {
     console.error(error.stack);
 
     if (
+      error instanceof UnauthorizedException ||
       error instanceof NotFoundException ||
       error instanceof ConflictException ||
       error instanceof UnprocessableContentException ||

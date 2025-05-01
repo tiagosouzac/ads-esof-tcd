@@ -36,7 +36,7 @@ class UsersService {
     return await this.repository.create({
       name,
       email,
-      password: await HashService.hashPassword(password),
+      password: await HashService.hashPassword({ password }),
       role,
     });
   }
@@ -60,7 +60,7 @@ class UsersService {
       name,
       email,
       password: password
-        ? await HashService.hashPassword(password)
+        ? await HashService.hashPassword({ password })
         : user.password,
       role,
     });
