@@ -1,4 +1,4 @@
-import { PrismaClient } from "../infra/database/generated/prisma";
+import { PrismaClient } from "../infra/database/prisma/generated/prisma";
 
 class Database {
   private static instance: PrismaClient;

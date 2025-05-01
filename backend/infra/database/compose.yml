@@ -2,9 +2,11 @@ services:
   database:
     image: mysql:9.3
     ports:
-      - '3306:3306'
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: project_manager
       MYSQL_USER: local_user
       MYSQL_PASSWORD: local_password
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
