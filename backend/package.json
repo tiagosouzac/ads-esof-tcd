@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "prisma:generate": "prisma generate --schema=infra/database/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema=infra/database/schema.prisma",
+    "prisma:reset": "prisma migrate reset --schema=infra/database/schema.prisma",
+    "prisma:status": "prisma migrate status --schema=infra/database/schema.prisma",
+    "prisma:studio": "prisma studio --schema=infra/database/schema.prisma"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "prisma": "^6.7.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.7.0"
+  }
+}
