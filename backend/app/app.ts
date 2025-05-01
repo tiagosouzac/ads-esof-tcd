@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { Database } from "../config/database";
+import { ExceptionHandler } from "./middlewares/exception-handler.middleware";
 
 class App {
   private app: express.Application;
@@ -12,6 +13,7 @@ class App {
   async init() {
     this.setupMiddlewares();
     this.setupRoutes();
+    this.setupExceptionHandler();
     await this.setupDatabase();
   }
 
@@ -25,6 +27,10 @@ class App {
     this.app.get("/", (_, response) => {
       response.send("Hello World!");
     });
+  }
+
+  setupExceptionHandler() {
+    this.app.use(ExceptionHandler.handle);
   }
 
   async setupDatabase() {
