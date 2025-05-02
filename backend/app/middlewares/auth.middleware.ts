@@ -15,7 +15,7 @@ declare global {
 }
 
 class Auth {
-  static handle(request: Request, response: Response, next: NextFunction) {
+  static handle(request: Request, _: Response, next: NextFunction) {
     const authorizationHeader = request.headers["authorization"];
     const token = authorizationHeader?.split(" ")[1];
 
@@ -25,21 +25,15 @@ class Auth {
       );
     }
 
-    try {
-      const payload = JwtService.verifyToken({ token });
+    const payload = JwtService.verifyToken({ token });
 
-      request.user = {
-        id: payload.id,
-        name: payload.name,
-        email: payload.email,
-      };
+    request.user = {
+      id: payload.id,
+      name: payload.name,
+      email: payload.email,
+    };
 
-      next();
-    } catch (error) {
-      throw new UnauthorizedException(
-        "Invalid or expired token. Please log in again."
-      );
-    }
+    next();
   }
 }
 

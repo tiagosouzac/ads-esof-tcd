@@ -12,8 +12,6 @@ class ExceptionHandler {
     response: Response,
     __: NextFunction
   ) {
-    console.error(error.stack);
-
     if (
       error instanceof UnauthorizedException ||
       error instanceof NotFoundException ||
@@ -29,6 +27,8 @@ class ExceptionHandler {
 
       return;
     }
+
+    console.error(error);
 
     response.status(500).json({
       name: error.name,

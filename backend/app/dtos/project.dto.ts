@@ -2,12 +2,12 @@ import { ProjectValidator } from "../validators/project.validator";
 
 class ProjectDTO {
   constructor(
-    public id: number,
-    public name: string,
-    public description: string,
-    public createdAt: Date,
-    public updatedAt: Date,
-    public requirements?: Array<{
+    public readonly id: number,
+    public readonly name: string,
+    public readonly description: string,
+    public readonly createdAt: Date,
+    public readonly updatedAt: Date,
+    public readonly requirements?: Array<{
       title: string;
       description: string | null;
       createdAt: Date;
