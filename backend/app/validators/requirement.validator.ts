@@ -1,16 +1,27 @@
 import { z } from "zod";
 import { UnprocessableContentException } from "../exceptions/unprocessable-content.exception";
 
-class UserValidator {
+class RequirementValidator {
   private readonly schema = z.object({
     id: z.coerce.number().int().positive(),
-    name: z.string().min(1).max(255),
-    email: z.string().email().max(255),
-    password: z.string().min(8).max(255),
-    role: z.enum(["ADMIN", "PO", "PM", "DESIGNER", "DEVELOPER", "VIEWER"]),
+    title: z.string(),
+    description: z.string().optional(),
+    projectId: z.coerce.number(),
     createdAt: z.coerce.date().optional(),
     updatedAt: z.coerce.date().optional(),
   });
+
+  list(payload: unknown) {
+    const { success, data, error } = this.schema
+      .pick({ projectId: true })
+      .safeParse(payload);
+
+    if (!success) {
+      throw new UnprocessableContentException(error.flatten().fieldErrors);
+    }
+
+    return data;
+  }
 
   find(payload: unknown) {
     const { success, data, error } = this.schema
@@ -38,8 +49,8 @@ class UserValidator {
 
   update(payload: unknown) {
     const { success, data, error } = this.schema
-      .omit({ createdAt: true, updatedAt: true })
-      .partial({ email: true, password: true, role: true })
+      .omit({ projectId: true, createdAt: true, updatedAt: true })
+      .partial({ title: true, description: true })
       .safeParse(payload);
 
     if (!success) {
@@ -62,4 +73,4 @@ class UserValidator {
   }
 }
 
-export { UserValidator };
+export { RequirementValidator };

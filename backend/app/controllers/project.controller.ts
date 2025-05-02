@@ -1,0 +1,92 @@
+import { Request, Response } from "express";
+import { ProjectValidator } from "../validators/project.validator";
+import { ProjectService } from "../services/project.service";
+import { ProjectDTO } from "../dtos/project.dto";
+
+class ProjectController {
+  private readonly validator = new ProjectValidator();
+  private readonly service = new ProjectService();
+
+  async list(_: Request, response: Response) {
+    const projects = await this.service.list();
+
+    response
+      .status(200)
+      .json(
+        projects.map(
+          (project) =>
+            new ProjectDTO(
+              project.id,
+              project.name,
+              project.description,
+              project.createdAt,
+              project.updatedAt
+            )
+        )
+      );
+  }
+
+  async find(request: Request, response: Response) {
+    const payload = this.validator.find(request.params);
+    const project = await this.service.find(payload);
+
+    response
+      .status(200)
+      .json(
+        new ProjectDTO(
+          project.id,
+          project.name,
+          project.description,
+          project.createdAt,
+          project.updatedAt,
+          project.requirements
+        )
+      );
+  }
+
+  async create(request: Request, response: Response) {
+    const payload = this.validator.create(request.body);
+    const project = await this.service.create(payload);
+
+    response
+      .status(201)
+      .json(
+        new ProjectDTO(
+          project.id,
+          project.name,
+          project.description,
+          project.createdAt,
+          project.updatedAt
+        )
+      );
+  }
+
+  async update(request: Request, response: Response) {
+    const payload = this.validator.update({
+      ...request.params,
+      ...request.body,
+    });
+
+    const project = await this.service.update(payload);
+
+    response
+      .status(200)
+      .json(
+        new ProjectDTO(
+          project.id,
+          project.name,
+          project.description,
+          project.createdAt,
+          project.updatedAt
+        )
+      );
+  }
+
+  async delete(request: Request, response: Response) {
+    const payload = this.validator.delete(request.params);
+    await this.service.delete(payload);
+    response.status(204).send();
+  }
+}
+
+export { ProjectController };

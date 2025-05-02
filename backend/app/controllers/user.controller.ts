@@ -88,7 +88,7 @@ class UserController {
   async delete(request: Request, response: Response) {
     const payload = this.validator.delete(request.params);
     await this.service.delete(payload);
-    response.status(204).end();
+    response.status(204).send();
   }
 }
 

@@ -27,9 +27,9 @@ class UsersService {
   }
 
   async create({ name, email, password, role }: CreateUserDTO) {
-    const userExists = await this.repository.findByEmail(email);
+    const isEmailRegistered = await this.repository.findByEmail(email);
 
-    if (userExists) {
+    if (isEmailRegistered) {
       throw new ConflictException(`User with email ${email} already exists!`);
     }
 
