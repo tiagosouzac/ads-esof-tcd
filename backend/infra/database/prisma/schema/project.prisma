@@ -6,6 +6,7 @@ model Project {
   updatedAt   DateTime @updatedAt
 
   requirements Requirement[]
+  tasks        Task[]
 
   @@map("projects")
 }

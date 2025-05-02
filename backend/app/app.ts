@@ -7,6 +7,7 @@ import { AuthRoutes } from "./routes/auth.routes";
 import { ProjectRoutes } from "./routes/project.routes";
 import { Auth } from "./middlewares/auth.middleware";
 import { RequirementRoutes } from "./routes/requirement.routes";
+import { TaskRoutes } from "./routes/task.routes";
 
 class App {
   private app: express.Application;
@@ -43,6 +44,8 @@ class App {
       Auth.handle,
       RequirementRoutes.getRoutes()
     );
+
+    this.app.use(TaskRoutes.getPath(), Auth.handle, TaskRoutes.getRoutes());
   }
 
   setupExceptionHandler() {
