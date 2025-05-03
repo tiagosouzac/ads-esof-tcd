@@ -22,7 +22,7 @@
 					</div>
 
 					<div class="grid">
-						<span class="text-sm font-semibold leading-tight">{user.name}</span>
+						<strong class="text-sm font-semibold leading-tight">{user.name}</strong>
 						<span class="text-sm leading-tight text-neutral-600">{user.email}</span>
 					</div>
 				</div>

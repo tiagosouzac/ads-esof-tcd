@@ -9,6 +9,10 @@
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
 			url: 'https://example.com/project1',
 			status: 'IN_PROGRESS',
+			requirements: {
+				total: 10,
+				completed: 3
+			},
 			tasks: {
 				total: 10,
 				completed: 3
@@ -20,6 +24,10 @@
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
 			url: 'https://example.com/project2',
 			status: 'COMPLETED',
+			requirements: {
+				total: 10,
+				completed: 3
+			},
 			tasks: {
 				total: 10,
 				completed: 10
@@ -31,6 +39,10 @@
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
 			url: 'https://example.com/project3',
 			status: 'PENDING',
+			requirements: {
+				total: 10,
+				completed: 3
+			},
 			tasks: {
 				total: 10,
 				completed: 0
@@ -39,7 +51,7 @@
 	];
 </script>
 
-<section class="container space-y-5">
+<section class="space-y-5">
 	<div class="space-y-1">
 		<h1>Projetos</h1>
 

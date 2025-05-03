@@ -6,6 +6,6 @@
 
 <Header />
 
-<main class="py-6">
+<main class="container space-y-11 py-6">
 	{@render children()}
 </main>
