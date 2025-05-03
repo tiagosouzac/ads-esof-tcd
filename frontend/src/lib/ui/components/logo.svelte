@@ -1,5 +1,5 @@
 <script>
-	import { ClipboardPen, Route } from '@lucide/svelte';
+	import { ClipboardPen } from '@lucide/svelte';
 </script>
 
 <a class="group flex w-fit items-center gap-2.5" href="/">
@@ -9,7 +9,7 @@
 		<ClipboardPen class="size-6 stroke-white" strokeWidth={1.5} />
 	</div>
 
-	<span class="text-lg font-semibold transition-colors duration-200 group-hover:text-neutral-700">
+	<strong class="text-lg font-semibold transition-colors duration-200 group-hover:text-neutral-700">
 		Project Manager
-	</span>
+	</strong>
 </a>

@@ -41,7 +41,7 @@
 
 <section class="container space-y-5">
 	<div class="space-y-1">
-		<h2 class="text-2xl font-bold">Projetos</h2>
+		<h1>Projetos</h1>
 
 		<p class="text-lg text-neutral-500">
 			Esta é a lista de projetos que você criou para gerenciar os requisitos e repassá-los à sua
@@ -54,18 +54,15 @@
 		<ul class="space-y-2">
 			{#each projects as project}
 				<li>
-					<a href={project.url} target="_blank" rel="noopener noreferrer">
+					<a href={project.url}>
 						<Project {...project} />
 					</a>
 				</li>
 			{/each}
 		</ul>
 
-		<a
-			class="flex w-fit items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-white transition-colors duration-200 hover:bg-indigo-700"
-			href="/create"
-		>
-			<Plus class="size-5" />
+		<a class="btn w-44" href="/create">
+			<Plus />
 			Criar projeto
 		</a>
 	</div>
