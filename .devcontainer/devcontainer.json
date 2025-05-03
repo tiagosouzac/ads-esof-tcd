@@ -15,7 +15,8 @@
         "cweijan.vscode-database-client2",
         "jripouteau.adonis-vscode-extension",
         "jripouteau.japa-vscode",
-        "Prisma.prisma"
+        "Prisma.prisma",
+        "svelte.svelte-vscode"
       ]
     }
   }
