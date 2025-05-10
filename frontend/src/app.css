@@ -38,11 +38,11 @@
 	}
 
 	label {
-		@apply mb-1 block text-sm font-medium text-neutral-900;
+		@apply block text-sm font-medium text-neutral-900;
 	}
 
 	input {
-		@apply block h-11 w-full rounded-md border px-4 text-neutral-900;
+		@apply block h-11 w-full rounded-md border px-4 text-neutral-900 disabled:bg-neutral-100 disabled:text-neutral-500;
 	}
 
 	textarea {

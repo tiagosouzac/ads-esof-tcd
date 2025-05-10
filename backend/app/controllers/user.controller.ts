@@ -45,6 +45,24 @@ class UserController {
       );
   }
 
+  async show(request: Request, response: Response) {
+    const payload = this.validator.show(request.user);
+    const user = await this.service.show(payload);
+
+    response
+      .status(200)
+      .json(
+        new UserDTO(
+          user.id,
+          user.name,
+          user.email,
+          user.role,
+          user.createdAt,
+          user.updatedAt
+        )
+      );
+  }
+
   async create(request: Request, response: Response) {
     const payload = this.validator.create(request.body);
     const user = await this.service.create(payload);

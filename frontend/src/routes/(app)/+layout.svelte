@@ -1,10 +1,10 @@
 <script>
 	import Header from '$lib/ui/sections/header.svelte';
 
-	const { children } = $props();
+	const { data, children } = $props();
 </script>
 
-<Header />
+<Header user={data.user} />
 
 <main class="container space-y-11 py-6">
 	{@render children()}

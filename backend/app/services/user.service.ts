@@ -2,6 +2,7 @@ import {
   CreateUserDTO,
   DeleteUserDTO,
   FindUserDTO,
+  ShowUserDTO,
   UpdateUserDTO,
 } from "../dtos/user.dto";
 import { ConflictException } from "../exceptions/conflict.exception";
@@ -17,6 +18,16 @@ class UsersService {
   }
 
   async find({ id }: FindUserDTO) {
+    const user = await this.repository.findById(id);
+
+    if (!user) {
+      throw new NotFoundException(`User with id ${id} not found!`);
+    }
+
+    return user;
+  }
+
+  async show({ id }: ShowUserDTO) {
     const user = await this.repository.findById(id);
 
     if (!user) {

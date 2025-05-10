@@ -1,4 +1,5 @@
 import { AuthDTO } from "../dtos/auth.dto";
+import { JwtDTO } from "../dtos/jwt.dto";
 import { UserDTO } from "../dtos/user.dto";
 import { AuthService } from "../services/auth.service";
 import { AuthValidator } from "../validators/auth.validator";
@@ -24,7 +25,7 @@ class AuthController {
             user.createdAt,
             user.updatedAt
           ),
-          token
+          new JwtDTO(token.value, token.expiresIn)
         )
       );
   }

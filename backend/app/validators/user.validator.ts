@@ -24,6 +24,18 @@ class UserValidator {
     return data;
   }
 
+  show(payload: unknown) {
+    const { success, data, error } = this.schema
+      .pick({ id: true })
+      .safeParse(payload);
+
+    if (!success) {
+      throw new UnprocessableContentException(error.flatten().fieldErrors);
+    }
+
+    return data;
+  }
+
   create(payload: unknown) {
     const { success, data, error } = this.schema
       .omit({ id: true, createdAt: true, updatedAt: true })

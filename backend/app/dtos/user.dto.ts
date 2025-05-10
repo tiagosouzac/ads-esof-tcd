@@ -12,8 +12,16 @@ class UserDTO {
 }
 
 type FindUserDTO = ReturnType<typeof UserValidator.prototype.find>;
+type ShowUserDTO = ReturnType<typeof UserValidator.prototype.show>;
 type CreateUserDTO = ReturnType<typeof UserValidator.prototype.create>;
 type UpdateUserDTO = ReturnType<typeof UserValidator.prototype.update>;
 type DeleteUserDTO = ReturnType<typeof UserValidator.prototype.delete>;
 
-export { UserDTO, FindUserDTO, CreateUserDTO, UpdateUserDTO, DeleteUserDTO };
+export {
+  UserDTO,
+  FindUserDTO,
+  ShowUserDTO,
+  CreateUserDTO,
+  UpdateUserDTO,
+  DeleteUserDTO,
+};

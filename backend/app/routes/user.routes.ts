@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { UserController } from "../controllers/user.controller";
+import { Auth } from "../middlewares/auth.middleware";
 
 class UserRoutes {
   private static readonly controller = new UserController();
@@ -12,9 +13,11 @@ class UserRoutes {
 
   public static getRoutes() {
     return this.routes
-      .get("/", this.controller.list.bind(this.controller))
-      .get("/:id", this.controller.find.bind(this.controller))
       .post("/", this.controller.create.bind(this.controller))
+      .use(Auth.handle)
+      .get("/", this.controller.list.bind(this.controller))
+      .get("/me", this.controller.show.bind(this.controller))
+      .get("/:id", this.controller.find.bind(this.controller))
       .put("/:id", this.controller.update.bind(this.controller))
       .delete("/:id", this.controller.delete.bind(this.controller));
   }

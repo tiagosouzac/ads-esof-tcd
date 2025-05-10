@@ -1,3 +1,10 @@
+class JwtDTO {
+  constructor(
+    public readonly token: string,
+    public readonly expiresIn: number
+  ) {}
+}
+
 type GenerateJwtTokenDTO = {
   id: number;
   name: string;
@@ -8,4 +15,4 @@ type VerifyJwtTokenDTO = {
   token: string;
 };
 
-export { GenerateJwtTokenDTO, VerifyJwtTokenDTO };
+export { JwtDTO, GenerateJwtTokenDTO, VerifyJwtTokenDTO };

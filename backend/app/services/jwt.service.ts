@@ -7,7 +7,12 @@ class JwtService {
   static generateToken({ id, name, email }: GenerateJwtTokenDTO) {
     const secret = Env.get("JWT_SECRET");
     const expiresIn = Env.get("JWT_EXPIRATION");
-    return jwt.sign({ id, name, email }, secret, { expiresIn });
+
+    const value = jwt.sign({ id, name, email }, secret, {
+      expiresIn: expiresIn / 1000,
+    });
+
+    return { value, expiresIn };
   }
 
   static verifyToken({ token }: VerifyJwtTokenDTO) {
