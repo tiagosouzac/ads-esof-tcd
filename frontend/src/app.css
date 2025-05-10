@@ -63,9 +63,9 @@
 }
 
 @utility btn {
-	@apply flex h-11 w-fit items-center justify-center gap-2 rounded-md bg-indigo-600 px-4 text-sm font-medium text-white transition-colors duration-200 not-disabled:cursor-pointer hover:bg-indigo-700 [&_svg]:size-4.5;
+	@apply flex h-11 min-w-48 items-center justify-center gap-2 rounded-md bg-indigo-600 px-4 text-sm font-medium text-white transition-colors duration-200 not-disabled:cursor-pointer hover:bg-indigo-700 [&_svg]:size-4.5;
 }
 
 @utility btn-outline {
-	@apply flex h-11 w-fit items-center justify-center gap-2 rounded-md border px-4 text-sm font-medium text-neutral-900 transition-colors duration-200 not-disabled:cursor-pointer hover:bg-neutral-50 [&_svg]:size-4.5;
+	@apply flex h-11 min-w-48 items-center justify-center gap-2 rounded-md border px-4 text-sm font-medium text-neutral-900 transition-colors duration-200 not-disabled:cursor-pointer hover:bg-neutral-50 [&_svg]:size-4.5;
 }

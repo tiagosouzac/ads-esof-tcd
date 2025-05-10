@@ -1,7 +1,7 @@
 <script>
 	import { Edit } from '@lucide/svelte';
 	import Status from './status.svelte';
-	import Select from './select.svelte';
+	import RequirementForm from '../sections/requirement-form.svelte';
 
 	let { title, description, status } = $props();
 
@@ -43,46 +43,10 @@
 			</p>
 		</div>
 
-		<form>
-			<div>
-				<label for="title">Título</label>
-
-				<input
-					id="title"
-					name="title"
-					type="text"
-					placeholder="Digite o título do requisito"
-					defaultValue={title}
-				/>
-			</div>
-
-			<div>
-				<label for="description">Descrição</label>
-
-				<textarea
-					id="description"
-					name="description"
-					rows="5"
-					placeholder="Descreva os detalhes do requisito">{description}</textarea
-				>
-			</div>
-
-			<div class="grid grid-cols-2 gap-2">
-				<div>
-					<label for="status">Status</label>
-
-					<Select id="status" name="status">
-						<option value="PENDING">Pendente</option>
-						<option value="IN_PROGRESS">Em andamento</option>
-						<option value="COMPLETED">Concluído</option>
-					</Select>
-				</div>
-			</div>
-
-			<div class="flex items-center gap-1.5">
-				<button class="btn w-40" type="submit">Salvar alterações</button>
-				<button class="btn-outline w-25" type="button" onclick={toggleEdit}>Cancelar</button>
-			</div>
-		</form>
+		<RequirementForm
+			requirement={{ title, description, status }}
+			onsubmit={toggleEdit}
+			oncancel={toggleEdit}
+		/>
 	</div>
 {/if}

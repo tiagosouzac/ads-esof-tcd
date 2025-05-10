@@ -7,7 +7,7 @@
 			title: 'Lorem ipsum dolor sit amet',
 			description:
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-			url: 'https://example.com/project1',
+			url: '/project/1',
 			status: 'IN_PROGRESS',
 			requirements: {
 				total: 10,
@@ -22,7 +22,7 @@
 			title: 'Lorem ipsum dolor sit amet',
 			description:
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-			url: 'https://example.com/project2',
+			url: '/project/1',
 			status: 'COMPLETED',
 			requirements: {
 				total: 10,
@@ -37,7 +37,7 @@
 			title: 'Lorem ipsum dolor sit amet',
 			description:
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-			url: 'https://example.com/project3',
+			url: '/project/1',
 			status: 'PENDING',
 			requirements: {
 				total: 10,
@@ -73,7 +73,7 @@
 			{/each}
 		</ul>
 
-		<a class="btn w-44" href="/create">
+		<a class="btn w-44" href="/project/create">
 			<Plus />
 			Criar projeto
 		</a>

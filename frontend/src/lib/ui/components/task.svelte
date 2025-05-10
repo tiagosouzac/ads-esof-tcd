@@ -1,9 +1,9 @@
 <script>
-	import { Edit, User } from '@lucide/svelte';
+	import { Edit, Save, User } from '@lucide/svelte';
 	import Status from './status.svelte';
-	import Select from './select.svelte';
+	import TaskForm from '../sections/task-form.svelte';
 
-	let { title, description, status } = $props();
+	let { title, description, status, assignee } = $props();
 
 	let isEditing = $state(false);
 
@@ -48,55 +48,10 @@
 			</p>
 		</div>
 
-		<form>
-			<div>
-				<label for="title">Título</label>
-
-				<input
-					id="title"
-					name="title"
-					type="text"
-					placeholder="Digite o título da tarefa"
-					defaultValue={title}
-				/>
-			</div>
-
-			<div>
-				<label for="description">Descrição</label>
-
-				<textarea
-					id="description"
-					name="description"
-					rows="5"
-					placeholder="Descreva os detalhes da tarefa">{description}</textarea
-				>
-			</div>
-
-			<div class="grid grid-cols-2 gap-2">
-				<div>
-					<label for="status">Status</label>
-
-					<Select id="status" name="status">
-						<option value="PENDING">Pendente</option>
-						<option value="IN_PROGRESS">Em andamento</option>
-						<option value="COMPLETED">Concluído</option>
-					</Select>
-				</div>
-
-				<div>
-					<label for="assignee">Atribuído a</label>
-
-					<Select id="assignee" name="assignee">
-						<option value="Tiago">Tiago</option>
-						<option value="Igor">Igor</option>
-					</Select>
-				</div>
-			</div>
-
-			<div class="flex items-center gap-1.5">
-				<button class="btn w-40" type="submit">Salvar alterações</button>
-				<button class="btn-outline w-25" type="button" onclick={toggleEdit}>Cancelar</button>
-			</div>
-		</form>
+		<TaskForm
+			task={{ title, description, status, assignee }}
+			onsubmit={toggleEdit}
+			oncancel={toggleEdit}
+		/>
 	</div>
 {/if}

@@ -12,7 +12,7 @@
 		</li>
 
 		<li>
-			<a class="flex items-center gap-1 hover:text-neutral-900" href="/create">
+			<a class="flex items-center gap-1 hover:text-neutral-900" href="/project/create">
 				<Plus class="size-5" />
 				Criar projeto
 			</a>
