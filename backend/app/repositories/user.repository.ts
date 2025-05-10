@@ -11,6 +11,10 @@ type UserData = {
 class UserRepository {
   private readonly db = Database.getInstance();
 
+  async count() {
+    return await this.db.user.count();
+  }
+
   async list() {
     return await this.db.user.findMany();
   }
