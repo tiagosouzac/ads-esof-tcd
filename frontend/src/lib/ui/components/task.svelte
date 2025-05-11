@@ -1,9 +1,9 @@
 <script>
-	import { Edit, Save, User } from '@lucide/svelte';
+	import { Edit, User } from '@lucide/svelte';
 	import Status from './status.svelte';
 	import TaskForm from '../sections/task-form.svelte';
 
-	let { title, description, status, assignee } = $props();
+	let { task, users, form } = $props();
 
 	let isEditing = $state(false);
 
@@ -19,17 +19,19 @@
 	>
 		<div class="space-y-4">
 			<div class="space-y-1">
-				<strong>{title}</strong>
-				<p class="text-sm">{description}</p>
+				<strong>{task.title}</strong>
+				<p class="text-sm">{task.description}</p>
 			</div>
 
 			<div class="flex flex-wrap items-center gap-x-6 gap-y-2">
-				<Status {status} />
+				<Status status={task.status} />
 
-				<span class="flex items-center gap-2 text-sm">
-					<User class="size-4" />
-					Tiago
-				</span>
+				{#if task.assignee?.id}
+					<span class="flex items-center gap-2 text-sm">
+						<User class="size-4" />
+						{task.assignee.name}
+					</span>
+				{/if}
 			</div>
 		</div>
 
@@ -48,10 +50,6 @@
 			</p>
 		</div>
 
-		<TaskForm
-			task={{ title, description, status, assignee }}
-			onsubmit={toggleEdit}
-			oncancel={toggleEdit}
-		/>
+		<TaskForm {task} {users} {form} closeForm={toggleEdit} />
 	</div>
 {/if}

@@ -4,10 +4,11 @@ import { UnprocessableContentException } from "../exceptions/unprocessable-conte
 class TaskValidator {
   private readonly schema = z.object({
     id: z.coerce.number().int().positive(),
-    title: z.string().min(1).max(255),
-    description: z.string().max(255).optional(),
+    title: z.string().nonempty(),
+    description: z.string().optional(),
     status: z.enum(["PENDING", "IN_PROGRESS", "COMPLETED"]),
     projectId: z.coerce.number().int().positive(),
+    assigneeId: z.number().nullable(),
     createdAt: z.coerce.date(),
     updatedAt: z.coerce.date(),
   });
@@ -51,7 +52,12 @@ class TaskValidator {
   update(payload: unknown) {
     const { success, error, data } = this.schema
       .omit({ projectId: true, createdAt: true, updatedAt: true })
-      .partial({ title: true, description: true, status: true })
+      .partial({
+        title: true,
+        description: true,
+        status: true,
+        assigneeId: true,
+      })
       .safeParse(payload);
 
     if (!success) {

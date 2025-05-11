@@ -1,8 +1,10 @@
 import { Database } from "../../config/database";
+import { RequirementStatus } from "../../infra/database/prisma/generated/prisma";
 
 type RequirementData = {
   title: string;
   description?: string;
+  status: RequirementStatus;
   projectId: number;
 };
 

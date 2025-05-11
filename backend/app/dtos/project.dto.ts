@@ -1,4 +1,6 @@
 import { ProjectValidator } from "../validators/project.validator";
+import { RequirementDTO } from "./requirement.dto";
+import { TaskDTO } from "./task.dto";
 
 class ProjectDTO {
   constructor(
@@ -7,12 +9,8 @@ class ProjectDTO {
     public readonly description: string,
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
-    public readonly requirements?: Array<{
-      title: string;
-      description: string | null;
-      createdAt: Date;
-      updatedAt: Date;
-    }>
+    public readonly requirements?: RequirementDTO[],
+    public readonly tasks?: TaskDTO[]
   ) {}
 }
 

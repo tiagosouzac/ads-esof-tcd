@@ -9,13 +9,21 @@ class ProjectRepository {
   private readonly db = Database.getInstance();
 
   async list() {
-    return await this.db.project.findMany();
+    return await this.db.project.findMany({
+      include: {
+        requirements: true,
+        tasks: { include: { assignee: { select: { id: true, name: true } } } },
+      },
+    });
   }
 
   async findById(id: number) {
     return await this.db.project.findUnique({
       where: { id },
-      include: { requirements: true },
+      include: {
+        requirements: true,
+        tasks: { include: { assignee: { select: { id: true, name: true } } } },
+      },
     });
   }
 

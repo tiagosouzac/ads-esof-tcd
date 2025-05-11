@@ -25,15 +25,21 @@ class RequirementService {
     return requirement;
   }
 
-  async create({ title, description, projectId }: CreateRequirementDTO) {
+  async create({
+    title,
+    description,
+    status,
+    projectId,
+  }: CreateRequirementDTO) {
     return await this.repository.create({
       title,
       description,
+      status,
       projectId,
     });
   }
 
-  async update({ id, title, description }: UpdateRequirementDTO) {
+  async update({ id, title, description, status }: UpdateRequirementDTO) {
     const requirement = await this.repository.findById(id);
 
     if (!requirement) {
@@ -43,6 +49,7 @@ class RequirementService {
     return await this.repository.update(id, {
       title,
       description,
+      status,
     });
   }
 

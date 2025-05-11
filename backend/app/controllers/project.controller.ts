@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { ProjectValidator } from "../validators/project.validator";
 import { ProjectService } from "../services/project.service";
 import { ProjectDTO } from "../dtos/project.dto";
+import { RequirementDTO } from "../dtos/requirement.dto";
+import { TaskDTO } from "../dtos/task.dto";
 
 class ProjectController {
   private readonly validator = new ProjectValidator();
@@ -10,38 +12,81 @@ class ProjectController {
   async list(_: Request, response: Response) {
     const projects = await this.service.list();
 
-    response
-      .status(200)
-      .json(
-        projects.map(
-          (project) =>
-            new ProjectDTO(
-              project.id,
-              project.name,
-              project.description,
-              project.createdAt,
-              project.updatedAt
+    response.status(200).json(
+      projects.map(
+        (project) =>
+          new ProjectDTO(
+            project.id,
+            project.name,
+            project.description,
+            project.createdAt,
+            project.updatedAt,
+            project.requirements.map(
+              (requirement) =>
+                new RequirementDTO(
+                  requirement.id,
+                  requirement.title,
+                  requirement.description,
+                  requirement.status,
+                  requirement.projectId,
+                  requirement.createdAt,
+                  requirement.updatedAt
+                )
+            ),
+            project.tasks.map(
+              (task) =>
+                new TaskDTO(
+                  task.id,
+                  task.title,
+                  task.description,
+                  task.status,
+                  task.assignee,
+                  task.createdAt,
+                  task.updatedAt
+                )
             )
-        )
-      );
+          )
+      )
+    );
   }
 
   async find(request: Request, response: Response) {
     const payload = this.validator.find(request.params);
     const project = await this.service.find(payload);
 
-    response
-      .status(200)
-      .json(
-        new ProjectDTO(
-          project.id,
-          project.name,
-          project.description,
-          project.createdAt,
-          project.updatedAt,
-          project.requirements
+    response.status(200).json(
+      new ProjectDTO(
+        project.id,
+        project.name,
+        project.description,
+        project.createdAt,
+        project.updatedAt,
+        project.requirements.map(
+          (requirement) =>
+            new RequirementDTO(
+              requirement.id,
+              requirement.title,
+              requirement.description,
+              requirement.status,
+              requirement.projectId,
+              requirement.createdAt,
+              requirement.updatedAt
+            )
+        ),
+        project.tasks.map(
+          (task) =>
+            new TaskDTO(
+              task.id,
+              task.title,
+              task.description,
+              task.status,
+              task.assignee,
+              task.createdAt,
+              task.updatedAt
+            )
         )
-      );
+      )
+    );
   }
 
   async create(request: Request, response: Response) {

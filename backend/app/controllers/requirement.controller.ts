@@ -20,6 +20,7 @@ class RequirementController {
               requirement.id,
               requirement.title,
               requirement.description,
+              requirement.status,
               requirement.projectId,
               requirement.createdAt,
               requirement.updatedAt
@@ -39,6 +40,7 @@ class RequirementController {
           requirement.id,
           requirement.title,
           requirement.description,
+          requirement.status,
           requirement.projectId,
           requirement.createdAt,
           requirement.updatedAt
@@ -47,11 +49,7 @@ class RequirementController {
   }
 
   async create(request: Request, response: Response) {
-    const payload = this.validator.create({
-      ...request.params,
-      ...request.body,
-    });
-
+    const payload = this.validator.create(request.body);
     const requirement = await this.service.create(payload);
 
     response
@@ -61,6 +59,7 @@ class RequirementController {
           requirement.id,
           requirement.title,
           requirement.description,
+          requirement.status,
           requirement.projectId,
           requirement.createdAt,
           requirement.updatedAt
@@ -83,6 +82,7 @@ class RequirementController {
           requirement.id,
           requirement.title,
           requirement.description,
+          requirement.status,
           requirement.projectId,
           requirement.createdAt,
           requirement.updatedAt

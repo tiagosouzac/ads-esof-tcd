@@ -3,7 +3,7 @@
 	import Requirement from '../components/requirement.svelte';
 	import RequirementForm from './requirement-form.svelte';
 
-	const { requirements } = $props();
+	const { requirements = [], form } = $props();
 
 	let creatingRequirement = $state(false);
 
@@ -19,13 +19,22 @@
 	</div>
 
 	<div class="space-y-2">
-		<ul class="space-y-1.5">
-			{#each requirements as requirement}
-				<li>
-					<Requirement {...requirement} />
-				</li>
-			{/each}
-		</ul>
+		{#if requirements.length === 0}
+			{#if !creatingRequirement}
+				<p class="rounded-md border px-6 py-12 text-center">
+					Você ainda não cadastrou nenhum requisito para este projeto. Clique no botão abaixo para
+					adicionar o primeiro requisito.
+				</p>
+			{/if}
+		{:else}
+			<ul class="space-y-1.5">
+				{#each requirements as requirement}
+					<li>
+						<Requirement {requirement} {form} />
+					</li>
+				{/each}
+			</ul>
+		{/if}
 
 		{#if creatingRequirement}
 			<div class="space-y-4 rounded-md border p-6">
@@ -34,7 +43,7 @@
 					<p>Preencha os campos abaixo para adicionar um novo requisito ao projeto.</p>
 				</div>
 
-				<RequirementForm onsubmit={toggleRequirementForm} oncancel={toggleRequirementForm} />
+				<RequirementForm closeForm={toggleRequirementForm} {form} />
 			</div>
 		{/if}
 

@@ -4,8 +4,8 @@ import { UnprocessableContentException } from "../exceptions/unprocessable-conte
 class ProjectValidator {
   private readonly schema = z.object({
     id: z.coerce.number().int().positive(),
-    name: z.string(),
-    description: z.string(),
+    name: z.string().nonempty(),
+    description: z.string().nonempty(),
     createdAt: z.coerce.date().optional(),
     updatedAt: z.coerce.date().optional(),
   });

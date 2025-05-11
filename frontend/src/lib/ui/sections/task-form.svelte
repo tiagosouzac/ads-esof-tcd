@@ -1,72 +1,104 @@
 <script>
-	import { Plus, Save } from '@lucide/svelte';
+	import { applyAction, enhance } from '$app/forms';
+	import { Plus, Save, Trash } from '@lucide/svelte';
 	import Select from '../components/select.svelte';
+	import Input from '../components/input.svelte';
+	import Textarea from '../components/textarea.svelte';
 
 	const {
 		task = { title: '', description: '', status: 'PENDING', assignee: '' },
-		onsubmit,
-		oncancel
+		users = [],
+		form,
+		closeForm
 	} = $props();
 </script>
 
-<form {onsubmit}>
-	<div>
-		<label for="title">Título</label>
+<form
+	method="POST"
+	use:enhance={() => {
+		return async ({ result, update }) => {
+			await applyAction(result);
+			await update();
 
-		<input
-			id="title"
-			name="title"
-			type="text"
-			placeholder="Digite o título da tarefa"
-			defaultValue={task.title}
+			if (result.type === 'success') {
+				closeForm();
+			}
+		};
+	}}
+>
+	{#if task.id}
+		<input name="taskId" type="hidden" value={task.id} />
+	{/if}
+
+	<Input
+		id="title"
+		name="title"
+		type="text"
+		label="Título"
+		placeholder="Digite o título da tarefa"
+		value={task.title}
+		error={form?.errors?.title?.[0]}
+		required
+	/>
+
+	<Textarea
+		id="description"
+		name="description"
+		label="Descrição"
+		placeholder="Descreva os detalhes da tarefa"
+		value={task.description}
+		error={form?.errors?.description?.[0]}
+		rows={5}
+	/>
+
+	<div class="grid grid-cols-2 gap-2">
+		<Select
+			id="status"
+			name="status"
+			label="Status"
+			options={[
+				{ value: 'PENDING', label: 'Pendente' },
+				{ value: 'IN_PROGRESS', label: 'Em andamento' },
+				{ value: 'COMPLETED', label: 'Concluído' }
+			]}
+			value={task.status}
+			error={form?.errors?.status?.[0]}
+			selected={task.status}
+		/>
+
+		<Select
+			id="assigneeId"
+			name="assigneeId"
+			label="Atribuído a"
+			options={users.map((user) => ({
+				value: user.id,
+				label: user.name
+			}))}
+			error={form?.errors?.assignee?.[0]}
+			selected={task.assignee?.id}
 		/>
 	</div>
 
-	<div>
-		<label for="description">Descrição</label>
+	<div class="flex items-center justify-between gap-3">
+		<div class="flex items-center gap-1.5">
+			{#if task.title !== ''}
+				<button class="btn" type="submit" formaction="?/update-task">
+					<Save />
+					Salvar alterações
+				</button>
+			{:else}
+				<button class="btn" type="submit" formaction="?/create-task">
+					<Plus />
+					Criar tarefa
+				</button>
+			{/if}
 
-		<textarea
-			id="description"
-			name="description"
-			rows="5"
-			placeholder="Descreva os detalhes da tarefa">{task.description}</textarea
-		>
-	</div>
-
-	<div class="grid grid-cols-2 gap-2">
-		<div>
-			<label for="status">Status</label>
-
-			<Select id="status" name="status">
-				<option value="PENDING" selected={task.status === 'PENDING'}>Pendente</option>
-				<option value="IN_PROGRESS" selected={task.status === 'IN_PROGRESS'}>Em andamento</option>
-				<option value="COMPLETED" selected={task.status === 'COMPLETED'}>Concluído</option>
-			</Select>
+			<button class="btn-outline" type="button" onclick={closeForm}>Cancelar</button>
 		</div>
 
-		<div>
-			<label for="assignee">Atribuído a</label>
-
-			<Select id="assignee" name="assignee">
-				<option value="Tiago" selected={task.assignee === 'Tiago'}>Tiago</option>
-				<option value="Igor" selected={task.assignee === 'Igor'}>Igor</option>
-			</Select>
-		</div>
-	</div>
-
-	<div class="flex items-center gap-1.5">
-		{#if task.title !== ''}
-			<button class="btn" type="submit">
-				<Save />
-				Salvar alterações
-			</button>
-		{:else}
-			<button class="btn" type="submit">
-				<Plus />
-				Criar tarefa
-			</button>
-		{/if}
-
-		<button class="btn-outline" type="button" onclick={oncancel}>Cancelar</button>
+		<button class="btn-icon btn-destructive" type="submit" formaction="?/delete-task">
+			<Trash />
+			<span class="sr-only">Excluir tarefa</span>
+		</button>
 	</div>
 </form>

@@ -21,6 +21,7 @@ class TaskController {
               task.title,
               task.description,
               task.status,
+              task.assignee,
               task.createdAt,
               task.updatedAt
             )
@@ -40,6 +41,7 @@ class TaskController {
           task.title,
           task.description,
           task.status,
+          task.assignee,
           task.createdAt,
           task.updatedAt
         )
@@ -58,6 +60,7 @@ class TaskController {
           task.title,
           task.description,
           task.status,
+          task.assignee,
           task.createdAt,
           task.updatedAt
         )
@@ -80,6 +83,7 @@ class TaskController {
           task.title,
           task.description,
           task.status,
+          task.assignee,
           task.createdAt,
           task.updatedAt
         )

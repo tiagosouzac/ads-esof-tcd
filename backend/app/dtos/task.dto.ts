@@ -6,6 +6,7 @@ class TaskDTO {
     public readonly title: string,
     public readonly description: string | null,
     public readonly status: string,
+    public readonly assignee: { id: number; name: string } | null,
     public readonly createdAt: Date,
     public readonly updatedAt: Date
   ) {}

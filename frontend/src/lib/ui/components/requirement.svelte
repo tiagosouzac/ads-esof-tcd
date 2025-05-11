@@ -3,7 +3,7 @@
 	import Status from './status.svelte';
 	import RequirementForm from '../sections/requirement-form.svelte';
 
-	let { title, description, status } = $props();
+	let { requirement, form } = $props();
 
 	let isEditing = $state(false);
 
@@ -19,12 +19,12 @@
 	>
 		<div class="space-y-4">
 			<div class="space-y-1">
-				<strong>{title}</strong>
-				<p class="text-sm">{description}</p>
+				<strong>{requirement.title}</strong>
+				<p class="text-sm">{requirement.description}</p>
 			</div>
 
 			<div class="flex flex-wrap items-center gap-x-6 gap-y-2">
-				<Status {status} />
+				<Status status={requirement.status} />
 			</div>
 		</div>
 
@@ -43,10 +43,6 @@
 			</p>
 		</div>
 
-		<RequirementForm
-			requirement={{ title, description, status }}
-			onsubmit={toggleEdit}
-			oncancel={toggleEdit}
-		/>
+		<RequirementForm {requirement} closeForm={toggleEdit} {form} />
 	</div>
 {/if}

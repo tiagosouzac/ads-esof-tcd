@@ -2,53 +2,7 @@
 	import Project from '$lib/ui/components/project.svelte';
 	import { Plus } from '@lucide/svelte';
 
-	const projects = [
-		{
-			title: 'Lorem ipsum dolor sit amet',
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-			url: '/project/1',
-			status: 'IN_PROGRESS',
-			requirements: {
-				total: 10,
-				completed: 3
-			},
-			tasks: {
-				total: 10,
-				completed: 3
-			}
-		},
-		{
-			title: 'Lorem ipsum dolor sit amet',
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-			url: '/project/1',
-			status: 'COMPLETED',
-			requirements: {
-				total: 10,
-				completed: 3
-			},
-			tasks: {
-				total: 10,
-				completed: 10
-			}
-		},
-		{
-			title: 'Lorem ipsum dolor sit amet',
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-			url: '/project/1',
-			status: 'PENDING',
-			requirements: {
-				total: 10,
-				completed: 3
-			},
-			tasks: {
-				total: 10,
-				completed: 0
-			}
-		}
-	];
+	const { data } = $props();
 </script>
 
 <section class="space-y-5">
@@ -63,15 +17,22 @@
 	</div>
 
 	<div class="space-y-3">
-		<ul class="space-y-2">
-			{#each projects as project}
-				<li>
-					<a href={project.url}>
-						<Project {...project} />
-					</a>
-				</li>
-			{/each}
-		</ul>
+		{#if data.projects.length === 0}
+			<p class="rounded-md border px-6 py-12 text-center">
+				Você ainda não criou nenhum projeto. Clique no botão abaixo para criar seu primeiro projeto
+				e gerenciar seus requisitos de forma eficiente.
+			</p>
+		{:else}
+			<ul class="space-y-2">
+				{#each data.projects as project}
+					<li>
+						<a href={`/project/${project.id}`}>
+							<Project {...project} />
+						</a>
+					</li>
+				{/each}
+			</ul>
+		{/if}
 
 		<a class="btn w-44" href="/project/create">
 			<Plus />

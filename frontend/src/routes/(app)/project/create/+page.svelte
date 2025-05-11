@@ -1,5 +1,7 @@
 <script>
 	import ProjectForm from '$lib/ui/sections/project-form.svelte';
+
+	const { form } = $props();
 </script>
 
 <div class="space-y-6">
@@ -12,5 +14,5 @@
 		</p>
 	</div>
 
-	<ProjectForm />
+	<ProjectForm {form} />
 </div>

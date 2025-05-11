@@ -3,7 +3,7 @@
 	import Task from '../components/task.svelte';
 	import TaskForm from './task-form.svelte';
 
-	const { tasks } = $props();
+	const { tasks = [], users, form } = $props();
 
 	let creatingTask = $state(false);
 
@@ -19,13 +19,22 @@
 	</div>
 
 	<div class="space-y-2">
-		<ul class="space-y-1.5">
-			{#each tasks as task}
-				<li>
-					<Task {...task} />
-				</li>
-			{/each}
-		</ul>
+		{#if tasks.length === 0}
+			{#if !creatingTask}
+				<p class="rounded-md border px-6 py-12 text-center">
+					Você ainda não cadastrou nenhuma tarefa para este projeto. Clique no botão abaixo para
+					adicionar a primeira tarefa.
+				</p>
+			{/if}
+		{:else}
+			<ul class="space-y-1.5">
+				{#each tasks as task}
+					<li>
+						<Task {task} {users} {form} />
+					</li>
+				{/each}
+			</ul>
+		{/if}
 
 		{#if creatingTask}
 			<div class="space-y-4 rounded-md border p-6">
@@ -34,7 +43,7 @@
 					<p>Preencha os campos abaixo para adicionar uma nova tarefa ao projeto.</p>
 				</div>
 
-				<TaskForm onsubmit={toggleTaskForm} oncancel={toggleTaskForm} />
+				<TaskForm closeForm={toggleTaskForm} {form} {users} />
 			</div>
 		{/if}
 

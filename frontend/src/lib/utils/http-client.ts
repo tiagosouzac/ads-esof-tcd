@@ -23,12 +23,20 @@ class HttpClient {
 
 		const response = await fetch(url, requestOptions);
 
-		if (!response.ok) {
-			const error = await response.json();
-			throw new HttpError(response.status, error.name, error.message, error.details);
+		if (response.headers.get('Content-Type')?.includes('application/json')) {
+			if (!response.ok) {
+				const error = await response.json();
+				throw new HttpError(response.status, error.name, error.message, error.details);
+			}
+
+			return new HttpResponse<T>(response.status, await response.json());
 		}
 
-		return new HttpResponse<T>(response.status, await response.json());
+		if (!response.ok) {
+			throw new HttpError(response.status, 'Error', await response.text());
+		}
+
+		return new HttpResponse<T>(response.status, {} as T);
 	}
 
 	public static async get<T = unknown>(options: Omit<FetchOptions, 'method' | 'data' | 'json'>) {

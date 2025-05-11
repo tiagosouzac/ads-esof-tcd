@@ -25,16 +25,23 @@ class TaskService {
     return task;
   }
 
-  async create({ title, description, status, projectId }: CreateTaskDTO) {
+  async create({
+    title,
+    description,
+    status,
+    projectId,
+    assigneeId,
+  }: CreateTaskDTO) {
     return await this.repository.create({
       title,
       description,
       status,
       projectId,
+      assigneeId,
     });
   }
 
-  async update({ id, title, description, status }: UpdateTaskDTO) {
+  async update({ id, title, description, status, assigneeId }: UpdateTaskDTO) {
     const task = await this.repository.find(id);
 
     if (!task) {
@@ -45,6 +52,7 @@ class TaskService {
       title,
       description,
       status,
+      assigneeId,
     });
   }
 

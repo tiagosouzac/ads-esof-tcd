@@ -4,9 +4,10 @@ import { UnprocessableContentException } from "../exceptions/unprocessable-conte
 class RequirementValidator {
   private readonly schema = z.object({
     id: z.coerce.number().int().positive(),
-    title: z.string(),
+    title: z.string().nonempty(),
     description: z.string().optional(),
     projectId: z.coerce.number(),
+    status: z.enum(["PENDING", "IN_PROGRESS", "COMPLETED"]),
     createdAt: z.coerce.date().optional(),
     updatedAt: z.coerce.date().optional(),
   });
@@ -50,7 +51,7 @@ class RequirementValidator {
   update(payload: unknown) {
     const { success, data, error } = this.schema
       .omit({ projectId: true, createdAt: true, updatedAt: true })
-      .partial({ title: true, description: true })
+      .partial({ title: true, description: true, status: true })
       .safeParse(payload);
 
     if (!success) {
