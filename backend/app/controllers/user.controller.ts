@@ -7,8 +7,9 @@ class UserController {
   private readonly validator = new UserValidator();
   private readonly service = new UsersService();
 
-  async list(_: Request, response: Response) {
-    const users = await this.service.list();
+  async list(request: Request, response: Response) {
+    const payload = this.validator.list(request.query);
+    const users = await this.service.list(payload);
 
     response
       .status(200)

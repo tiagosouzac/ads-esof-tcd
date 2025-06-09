@@ -17,9 +17,9 @@
 	<ProjectForm
 		project={{
 			name: data.project.name,
-			description: data.project.description,
-			status: data.project.status
+			description: data.project.description
 		}}
+		architects={data.architects}
 		{form}
 	/>
 </div>

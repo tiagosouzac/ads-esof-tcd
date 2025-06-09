@@ -7,10 +7,29 @@ class UserValidator {
     name: z.string().min(1).max(255),
     email: z.string().email().max(255),
     password: z.string().min(8).max(255),
-    role: z.enum(["ADMIN", "PO", "PM", "DESIGNER", "DEVELOPER", "VIEWER"]),
+    role: z.enum([
+      "MANAGER",
+      "ARCHITECT",
+      "DESIGNER",
+      "DEVELOPER",
+      "QUALITY_ANALYST",
+    ]),
     createdAt: z.coerce.date().optional(),
     updatedAt: z.coerce.date().optional(),
   });
+
+  list(payload: unknown) {
+    const { success, data, error } = this.schema
+      .pick({ role: true })
+      .partial()
+      .safeParse(payload);
+
+    if (!success) {
+      throw new UnprocessableContentException(error.flatten().fieldErrors);
+    }
+
+    return data;
+  }
 
   find(payload: unknown) {
     const { success, data, error } = this.schema

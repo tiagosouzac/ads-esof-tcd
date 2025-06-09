@@ -1,10 +1,12 @@
-<script>
+<script lang="ts">
 	import { enhance } from '$app/forms';
 	import { Plus, Save } from '@lucide/svelte';
 	import Input from '../components/input.svelte';
 	import Textarea from '../components/textarea.svelte';
+	import Select from '../components/select.svelte';
+	import { User } from '$lib/models/user';
 
-	const { project = { name: '', description: '' }, form } = $props();
+	const { project = { name: '', description: '' }, form, architects } = $props();
 </script>
 
 <form method="POST" use:enhance>
@@ -27,6 +29,16 @@
 		value={project.description ?? ''}
 		error={form?.errors?.description?.[0]}
 		rows={5}
+		required
+	/>
+
+	<Select
+		id="architect"
+		name="architect"
+		label="Arquiteto responsável"
+		options={architects.map((a: User) => ({ value: a.id, label: a.name }))}
+		value={project.architect ?? ''}
+		error={form?.errors?.architect?.[0]}
 		required
 	/>
 

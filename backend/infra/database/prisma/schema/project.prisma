@@ -2,11 +2,13 @@ model Project {
   id          Int      @id @default(autoincrement())
   name        String   @unique
   description String
+  architect   User     @relation(fields: [architectId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   requirements Requirement[]
   tasks        Task[]
+  architectId  Int
 
   @@map("projects")
 }

@@ -6,6 +6,7 @@ class ProjectValidator {
     id: z.coerce.number().int().positive(),
     name: z.string().nonempty(),
     description: z.string().nonempty(),
+    architect: z.number().int().positive(),
     createdAt: z.coerce.date().optional(),
     updatedAt: z.coerce.date().optional(),
   });

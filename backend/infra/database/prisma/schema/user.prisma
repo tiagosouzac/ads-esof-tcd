@@ -1,10 +1,9 @@
 enum Role {
-  ADMIN
-  PO
-  PM
+  MANAGER
+  ARCHITECT
   DESIGNER
   DEVELOPER
-  VIEWER
+  QUALITY_ANALYST
 }
 
 model User {
@@ -16,7 +15,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Task Task[]
+  Task    Task[]
+  Project Project[]
 
   @@map("users")
 }

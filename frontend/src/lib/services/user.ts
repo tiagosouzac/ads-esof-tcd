@@ -1,10 +1,10 @@
 import { HttpClient } from '$lib/utils/http-client';
-import type { CreateUserDTO } from '$lib/dtos/user';
+import type { CreateUserDTO, ListUserDTO } from '$lib/dtos/user';
 import type { User } from '$lib/models/user';
 
 class UserService {
-	static async list() {
-		const response = await HttpClient.get<User[]>({ url: '/users' });
+	static async list(payload?: ListUserDTO) {
+		const response = await HttpClient.get<User[]>({ url: '/users', params: payload });
 		return response.data;
 	}
 

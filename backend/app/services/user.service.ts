@@ -3,7 +3,7 @@ import {
   CreateUserDTO,
   DeleteUserDTO,
   FindUserDTO,
-  FindUserByEmailDTO,
+  ListUserDTO,
   ShowUserDTO,
   UpdateUserDTO,
 } from "../dtos/user.dto";
@@ -17,8 +17,8 @@ class UsersService {
   private readonly repository = new UserRepository();
   private systemConfigService = new SystemConfigService();
 
-  async list() {
-    return await this.repository.list();
+  async list(payload: ListUserDTO) {
+    return await this.repository.list(payload);
   }
 
   async find(payload: FindUserDTO) {
@@ -62,16 +62,16 @@ class UsersService {
 
   private async assignAdminRoleForFirstUser(role: string) {
     const config = await this.systemConfigService.find({
-      key: "FIRST_ADMIN_CREATED",
+      key: "FIRST_MANAGER_CREATED",
     });
 
     const isFirstAdminCreated = (config?.value ?? "false") === "true";
 
     if (!isFirstAdminCreated) {
-      role = "ADMIN";
+      role = "MANAGER";
 
       await this.systemConfigService.create({
-        key: "FIRST_ADMIN_CREATED",
+        key: "FIRST_MANAGER_CREATED",
         value: "true",
       });
     }

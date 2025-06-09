@@ -5,6 +5,7 @@ import {
   FindUserDTO,
   FindUserByEmailDTO,
   UpdateUserDTO,
+  ListUserDTO,
 } from "../dtos/user.dto";
 
 class UserRepository {
@@ -14,8 +15,14 @@ class UserRepository {
     return await this.db.user.count();
   }
 
-  async list() {
-    return await this.db.user.findMany();
+  async list({ role }: ListUserDTO) {
+    return await this.db.user.findMany({
+      where: {
+        role: {
+          equals: role,
+        },
+      },
+    });
   }
 
   async findById({ id }: FindUserDTO) {

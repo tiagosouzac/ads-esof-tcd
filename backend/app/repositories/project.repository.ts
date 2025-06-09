@@ -37,7 +37,11 @@ class ProjectRepository {
 
   async create(data: CreateProjectDTO) {
     return await this.db.project.create({
-      data: { name: data.name, description: data.description },
+      data: {
+        name: data.name,
+        description: data.description,
+        architect: { connect: { id: data.architect } },
+      },
     });
   }
 

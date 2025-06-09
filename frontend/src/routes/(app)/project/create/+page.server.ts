@@ -1,15 +1,24 @@
 import { ProjectService } from '$lib/services/project';
 import { HttpError } from '$lib/utils/http-error';
 import { fail, isRedirect, redirect, type Actions } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
+import { UserService } from '$lib/services/user';
+import { Role } from '$lib/models/user';
+
+export const load: PageServerLoad = async () => {
+	const architects = await UserService.list({ role: Role.ARCHITECT });
+	return { architects };
+};
 
 export const actions = {
 	default: async ({ request }) => {
 		const formData = await request.formData();
 		const name = formData.get('name')?.toString() ?? '';
 		const description = formData.get('description')?.toString() ?? '';
+		const architect = Number(formData.get('architect')?.toString() ?? '');
 
 		try {
-			const project = await ProjectService.create({ name, description });
+			const project = await ProjectService.create({ name, description, architect });
 			redirect(303, `/project/${project.id}`);
 		} catch (error) {
 			if (isRedirect(error)) {

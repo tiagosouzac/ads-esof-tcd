@@ -13,7 +13,7 @@ export const actions = {
 		const password = data.get('password')!.toString().trim();
 
 		try {
-			await UserService.create({ name, email, password, role: Role.VIEWER });
+			await UserService.create({ name, email, password, role: Role.DEVELOPER });
 			const { jwt, user } = await AuthService.handle({ email, password });
 
 			cookies.set('auth_token', jwt.token, {

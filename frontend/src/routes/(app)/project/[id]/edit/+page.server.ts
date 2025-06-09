@@ -2,11 +2,13 @@ import { ProjectService } from '$lib/services/project';
 import { fail, isRedirect, redirect } from '@sveltejs/kit';
 import { HttpError } from '$lib/utils/http-error';
 import type { Actions, PageServerLoad } from './$types';
-import type { ProjectStatus } from '$lib/models/project';
+import { UserService } from '$lib/services/user';
+import { Role } from '$lib/models/user';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const project = await ProjectService.find({ id: params.id });
-	return { project };
+	const architects = await UserService.list({ role: Role.ARCHITECT });
+	return { project, architects };
 };
 
 export const actions = {
@@ -14,10 +16,9 @@ export const actions = {
 		const formData = await request.formData();
 		const name = formData.get('name')?.toString() ?? '';
 		const description = formData.get('description')?.toString() ?? '';
-		const status = (formData.get('status')?.toString() ?? 'PENDING') as ProjectStatus;
 
 		try {
-			const project = await ProjectService.update({ id: params.id, name, description, status });
+			const project = await ProjectService.update({ id: params.id, name, description });
 			redirect(303, `/project/${project.id}`);
 		} catch (error) {
 			if (isRedirect(error)) {

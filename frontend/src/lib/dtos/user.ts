@@ -1,5 +1,9 @@
 import type { Role } from '$lib/models/user';
 
+type ListUserDTO = {
+	role: Role;
+};
+
 type CreateUserDTO = {
 	name: string;
 	email: string;
@@ -7,4 +11,4 @@ type CreateUserDTO = {
 	role: Role;
 };
 
-export type { CreateUserDTO };
+export type { ListUserDTO, CreateUserDTO };

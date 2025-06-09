@@ -81,7 +81,7 @@
 
 	<div class="flex items-center justify-between gap-3">
 		<div class="flex items-center gap-1.5">
-			{#if task.title !== ''}
+			{#if task.id !== ''}
 				<button class="btn" type="submit" formaction="?/update-task">
 					<Save />
 					Salvar alterações
@@ -96,9 +96,11 @@
 			<button class="btn-outline" type="button" onclick={closeForm}>Cancelar</button>
 		</div>
 
-		<button class="btn-icon btn-destructive" type="submit" formaction="?/delete-task">
-			<Trash />
-			<span class="sr-only">Excluir tarefa</span>
-		</button>
+		{#if task.id !== ''}
+			<button class="btn-icon btn-destructive" type="submit" formaction="?/delete-task">
+				<Trash />
+				<span class="sr-only">Excluir tarefa</span>
+			</button>
+		{/if}
 	</div>
 </form>

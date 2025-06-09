@@ -5,12 +5,18 @@ class UserDTO {
     public id: number,
     public name: string,
     public email: string,
-    public role: "ADMIN" | "PO" | "PM" | "DESIGNER" | "DEVELOPER" | "VIEWER",
+    public role:
+      | "MANAGER"
+      | "ARCHITECT"
+      | "DESIGNER"
+      | "DEVELOPER"
+      | "QUALITY_ANALYST",
     public createdAt: Date,
     public updatedAt: Date
   ) {}
 }
 
+type ListUserDTO = ReturnType<typeof UserValidator.prototype.list>;
 type FindUserDTO = ReturnType<typeof UserValidator.prototype.find>;
 type ShowUserDTO = ReturnType<typeof UserValidator.prototype.show>;
 type CreateUserDTO = ReturnType<typeof UserValidator.prototype.create>;
@@ -20,6 +26,7 @@ type FindUserByEmailDTO = { email: string };
 
 export {
   UserDTO,
+  ListUserDTO,
   FindUserDTO,
   ShowUserDTO,
   CreateUserDTO,

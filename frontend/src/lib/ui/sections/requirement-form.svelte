@@ -65,7 +65,7 @@
 
 	<div class="flex items-center justify-between gap-3">
 		<div class="flex items-center gap-1.5">
-			{#if requirement.title !== ''}
+			{#if requirement.id !== ''}
 				<button class="btn" type="submit" formaction="?/update-requirement">
 					<Save />
 					Salvar alterações
@@ -80,9 +80,11 @@
 			<button class="btn-outline" type="button" onclick={closeForm}>Cancelar</button>
 		</div>
 
-		<button class="btn-icon btn-destructive" type="submit" formaction="?/delete-requirement">
-			<Trash />
-			<span class="sr-only">Excluir requisito</span>
-		</button>
+		{#if requirement.id !== ''}
+			<button class="btn-icon btn-destructive" type="submit" formaction="?/delete-requirement">
+				<Trash />
+				<span class="sr-only">Excluir requisito</span>
+			</button>
+		{/if}
 	</div>
 </form>

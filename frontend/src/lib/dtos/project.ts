@@ -5,6 +5,7 @@ type FindProjectDTO = {
 type CreateProjectDTO = {
 	name: string;
 	description: string;
+	architect: number;
 };
 
 type UpdateProjectDTO = {
