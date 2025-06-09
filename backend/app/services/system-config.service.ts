@@ -9,18 +9,20 @@ import { ConflictException } from "../exceptions/conflict.exception";
 class SystemConfigService {
   private readonly repository = new SystemConfigRepository();
 
-  async find({ key }: FindSystemConfigDTO) {
-    return await this.repository.find(key);
+  async find(payload: FindSystemConfigDTO) {
+    return await this.repository.find(payload);
   }
 
-  async create({ key, value }: CreateSystemConfigDTO) {
-    const config = await this.repository.find(key);
+  async create(payload: CreateSystemConfigDTO) {
+    const config = await this.repository.find({ key: payload.key });
 
     if (config) {
-      throw new ConflictException(`Config with key ${key} already exists!`);
+      throw new ConflictException(
+        `Config with key ${payload.key} already exists!`
+      );
     }
 
-    return await this.repository.create(key, value);
+    return await this.repository.create(payload);
   }
 }
 

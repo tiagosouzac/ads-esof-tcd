@@ -1,9 +1,10 @@
 import { Database } from "../../config/database";
-
-type ProjectData = {
-  name: string;
-  description: string;
-};
+import {
+  CreateProjectDTO,
+  DeleteProjectDTO,
+  FindProjectDTO,
+  UpdateProjectDTO,
+} from "../dtos/project.dto";
 
 class ProjectRepository {
   private readonly db = Database.getInstance();
@@ -17,7 +18,7 @@ class ProjectRepository {
     });
   }
 
-  async findById(id: number) {
+  async findById({ id }: FindProjectDTO) {
     return await this.db.project.findUnique({
       where: { id },
       include: {
@@ -34,20 +35,20 @@ class ProjectRepository {
     });
   }
 
-  async create(data: ProjectData) {
+  async create(data: CreateProjectDTO) {
     return await this.db.project.create({
       data: { name: data.name, description: data.description },
     });
   }
 
-  async update(id: number, data: Partial<ProjectData>) {
+  async update({ id, ...data }: UpdateProjectDTO) {
     return await this.db.project.update({
       where: { id },
       data: { name: data.name, description: data.description },
     });
   }
 
-  async delete(id: number) {
+  async delete({ id }: DeleteProjectDTO) {
     return await this.db.project.delete({ where: { id } });
   }
 }

@@ -2,9 +2,9 @@ import { Router } from "express";
 import { ProjectController } from "../controllers/project.controller";
 
 class ProjectRoutes {
-  private static controller = new ProjectController();
-  private static routes = Router();
-  private static path = "/projects";
+  private static readonly controller = new ProjectController();
+  private static readonly routes = Router();
+  private static readonly path = "/projects";
 
   public static getPath() {
     return this.path;

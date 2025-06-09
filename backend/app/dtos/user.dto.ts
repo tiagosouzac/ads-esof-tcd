@@ -16,6 +16,7 @@ type ShowUserDTO = ReturnType<typeof UserValidator.prototype.show>;
 type CreateUserDTO = ReturnType<typeof UserValidator.prototype.create>;
 type UpdateUserDTO = ReturnType<typeof UserValidator.prototype.update>;
 type DeleteUserDTO = ReturnType<typeof UserValidator.prototype.delete>;
+type FindUserByEmailDTO = { email: string };
 
 export {
   UserDTO,
@@ -24,4 +25,5 @@ export {
   CreateUserDTO,
   UpdateUserDTO,
   DeleteUserDTO,
+  FindUserByEmailDTO,
 };

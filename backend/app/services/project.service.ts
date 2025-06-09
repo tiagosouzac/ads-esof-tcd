@@ -15,56 +15,58 @@ class ProjectService {
     return this.repository.list();
   }
 
-  async find({ id }: FindProjectDTO) {
-    const project = await this.repository.findById(id);
+  async find(payload: FindProjectDTO) {
+    const project = await this.repository.findById(payload);
 
     if (!project) {
-      throw new NotFoundException(`Project with id ${id} not found!`);
+      throw new NotFoundException(`Project with id ${payload.id} not found!`);
     }
 
     return project;
   }
 
-  async create({ name, description }: CreateProjectDTO) {
-    const projectWithSameName = await this.repository.findByName(name);
+  async create(payload: CreateProjectDTO) {
+    const projectWithSameName = await this.repository.findByName(payload.name);
 
     if (projectWithSameName) {
       throw new ConflictException(
-        `Project with name "${name}" already exists!`
+        `Project with name "${payload.name}" already exists!`
       );
     }
 
-    return await this.repository.create({ name, description });
+    return await this.repository.create(payload);
   }
 
-  async update({ id, name, description }: UpdateProjectDTO) {
-    const project = await this.repository.findById(id);
+  async update(payload: UpdateProjectDTO) {
+    const project = await this.repository.findById({ id: payload.id });
 
     if (!project) {
-      throw new NotFoundException(`Project with id ${id} not found!`);
+      throw new NotFoundException(`Project with id ${payload.id} not found!`);
     }
 
-    if (name) {
-      const projectWithSameName = await this.repository.findByName(name);
+    if (payload.name) {
+      const projectWithSameName = await this.repository.findByName(
+        payload.name
+      );
 
-      if (projectWithSameName && projectWithSameName.id !== id) {
+      if (projectWithSameName && projectWithSameName.id !== payload.id) {
         throw new ConflictException(
-          `Project with name "${name}" already exists!`
+          `Project with name "${payload.name}" already exists!`
         );
       }
     }
 
-    return await this.repository.update(id, { name, description });
+    return await this.repository.update(payload);
   }
 
-  async delete({ id }: DeleteProjectDTO) {
-    const project = await this.repository.findById(id);
+  async delete(payload: DeleteProjectDTO) {
+    const project = await this.repository.findById(payload);
 
     if (!project) {
-      throw new NotFoundException(`Project with id ${id} not found!`);
+      throw new NotFoundException(`Project with id ${payload.id} not found!`);
     }
 
-    return this.repository.delete(id);
+    return this.repository.delete(payload);
   }
 }
 

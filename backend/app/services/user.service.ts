@@ -3,6 +3,7 @@ import {
   CreateUserDTO,
   DeleteUserDTO,
   FindUserDTO,
+  FindUserByEmailDTO,
   ShowUserDTO,
   UpdateUserDTO,
 } from "../dtos/user.dto";
@@ -20,40 +21,42 @@ class UsersService {
     return await this.repository.list();
   }
 
-  async find({ id }: FindUserDTO) {
-    const user = await this.repository.findById(id);
+  async find(payload: FindUserDTO) {
+    const user = await this.repository.findById(payload);
 
     if (!user) {
-      throw new NotFoundException(`User with id ${id} not found!`);
+      throw new NotFoundException(`User with id ${payload.id} not found!`);
     }
 
     return user;
   }
 
-  async show({ id }: ShowUserDTO) {
-    const user = await this.repository.findById(id);
+  async show(payload: ShowUserDTO) {
+    const user = await this.repository.findById(payload);
 
     if (!user) {
-      throw new NotFoundException(`User with id ${id} not found!`);
+      throw new NotFoundException(`User with id ${payload.id} not found!`);
     }
 
     return user;
   }
 
-  async create({ name, email, password, role }: CreateUserDTO) {
-    role = await this.assignAdminRoleForFirstUser(role);
+  async create(payload: CreateUserDTO) {
+    payload.role = await this.assignAdminRoleForFirstUser(payload.role);
 
-    const isEmailRegistered = await this.repository.findByEmail(email);
+    const isEmailRegistered = await this.repository.findByEmail({
+      email: payload.email,
+    });
 
     if (isEmailRegistered) {
-      throw new ConflictException(`User with email ${email} already exists!`);
+      throw new ConflictException(
+        `User with email ${payload.email} already exists!`
+      );
     }
 
     return await this.repository.create({
-      name,
-      email,
-      password: await HashService.hashPassword({ password }),
-      role,
+      ...payload,
+      password: await HashService.hashPassword({ password: payload.password }),
     });
   }
 
@@ -76,39 +79,41 @@ class UsersService {
     return role as Role;
   }
 
-  async update({ id, name, email, password, role }: UpdateUserDTO) {
-    const user = await this.repository.findById(id);
+  async update(payload: UpdateUserDTO) {
+    const user = await this.repository.findById({ id: payload.id });
 
     if (!user) {
-      throw new NotFoundException(`User with id ${id} not found!`);
+      throw new NotFoundException(`User with id ${payload.id} not found!`);
     }
 
-    if (email) {
-      const isEmailRegistered = await this.repository.findByEmail(email);
+    if (payload.email) {
+      const isEmailRegistered = await this.repository.findByEmail({
+        email: payload.email,
+      });
 
-      if (isEmailRegistered && isEmailRegistered.id !== id) {
-        throw new ConflictException(`User with email ${email} already exists!`);
+      if (isEmailRegistered && isEmailRegistered.id !== payload.id) {
+        throw new ConflictException(
+          `User with email ${payload.email} already exists!`
+        );
       }
     }
 
-    return await this.repository.update(id, {
-      name,
-      email,
-      password: password
-        ? await HashService.hashPassword({ password })
+    return await this.repository.update({
+      ...payload,
+      password: payload.password
+        ? await HashService.hashPassword({ password: payload.password })
         : user.password,
-      role,
     });
   }
 
-  async delete({ id }: DeleteUserDTO) {
-    const user = await this.repository.findById(id);
+  async delete(payload: DeleteUserDTO) {
+    const user = await this.repository.findById(payload);
 
     if (!user) {
-      throw new NotFoundException(`User with id ${id} not found`);
+      throw new NotFoundException(`User with id ${payload.id} not found`);
     }
 
-    await this.repository.delete(id);
+    await this.repository.delete(payload);
   }
 }
 

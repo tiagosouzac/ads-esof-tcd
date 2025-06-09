@@ -1,33 +1,32 @@
 import { Database } from "../../config/database";
-import { RequirementStatus } from "../../infra/database/prisma/generated/prisma";
-
-type RequirementData = {
-  title: string;
-  description?: string;
-  status: RequirementStatus;
-  projectId: number;
-};
+import {
+  CreateRequirementDTO,
+  DeleteRequirementDTO,
+  FindRequirementDTO,
+  ListRequirementDTO,
+  UpdateRequirementDTO,
+} from "../dtos/requirement.dto";
 
 class RequirementRepository {
   private readonly db = Database.getInstance();
 
-  async list(projectId: number) {
+  async list({ projectId }: ListRequirementDTO) {
     return await this.db.requirement.findMany({ where: { projectId } });
   }
 
-  async findById(id: number) {
+  async findById({ id }: FindRequirementDTO) {
     return await this.db.requirement.findUnique({ where: { id } });
   }
 
-  async create(data: RequirementData) {
+  async create(data: CreateRequirementDTO) {
     return await this.db.requirement.create({ data });
   }
 
-  async update(id: number, data: Partial<RequirementData>) {
+  async update({ id, ...data }: UpdateRequirementDTO) {
     return await this.db.requirement.update({ where: { id }, data });
   }
 
-  async delete(id: number) {
+  async delete({ id }: DeleteRequirementDTO) {
     return await this.db.requirement.delete({ where: { id } });
   }
 }

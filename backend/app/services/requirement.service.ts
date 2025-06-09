@@ -11,56 +11,48 @@ import { RequirementRepository } from "../repositories/requirement.repository";
 class RequirementService {
   private readonly repository = new RequirementRepository();
 
-  async list({ projectId }: ListRequirementDTO) {
-    return await this.repository.list(projectId);
+  async list(payload: ListRequirementDTO) {
+    return await this.repository.list(payload);
   }
 
-  async find({ id }: FindRequirementDTO) {
-    const requirement = await this.repository.findById(id);
+  async find(payload: FindRequirementDTO) {
+    const requirement = await this.repository.findById(payload);
 
     if (!requirement) {
-      throw new NotFoundException(`Requirement with id ${id} not found!`);
+      throw new NotFoundException(
+        `Requirement with id ${payload.id} not found!`
+      );
     }
 
     return requirement;
   }
 
-  async create({
-    title,
-    description,
-    status,
-    projectId,
-  }: CreateRequirementDTO) {
-    return await this.repository.create({
-      title,
-      description,
-      status,
-      projectId,
-    });
+  async create(payload: CreateRequirementDTO) {
+    return await this.repository.create(payload);
   }
 
-  async update({ id, title, description, status }: UpdateRequirementDTO) {
-    const requirement = await this.repository.findById(id);
+  async update(payload: UpdateRequirementDTO) {
+    const requirement = await this.repository.findById({ id: payload.id });
 
     if (!requirement) {
-      throw new NotFoundException(`Requirement with id ${id} not found!`);
+      throw new NotFoundException(
+        `Requirement with id ${payload.id} not found!`
+      );
     }
 
-    return await this.repository.update(id, {
-      title,
-      description,
-      status,
-    });
+    return await this.repository.update(payload);
   }
 
-  async delete({ id }: DeleteRequirementDTO) {
-    const requirement = await this.repository.findById(id);
+  async delete(payload: DeleteRequirementDTO) {
+    const requirement = await this.repository.findById(payload);
 
     if (!requirement) {
-      throw new NotFoundException(`Requirement with id ${id} not found!`);
+      throw new NotFoundException(
+        `Requirement with id ${payload.id} not found!`
+      );
     }
 
-    await this.repository.delete(id);
+    await this.repository.delete(payload);
   }
 }
 

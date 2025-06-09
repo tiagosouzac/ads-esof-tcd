@@ -11,59 +11,42 @@ import { TaskRepository } from "../repositories/task.repository";
 class TaskService {
   private readonly repository = new TaskRepository();
 
-  async list({ projectId }: ListTaskDTO) {
-    return await this.repository.list(projectId);
+  async list(payload: ListTaskDTO) {
+    return await this.repository.list(payload);
   }
 
-  async find({ id }: FindTaskDTO) {
-    const task = await this.repository.find(id);
+  async find(payload: FindTaskDTO) {
+    const task = await this.repository.find(payload);
 
     if (!task) {
-      throw new NotFoundException(`Task with id ${id} not found!`);
+      throw new NotFoundException(`Task with id ${payload.id} not found!`);
     }
 
     return task;
   }
 
-  async create({
-    title,
-    description,
-    status,
-    projectId,
-    assigneeId,
-  }: CreateTaskDTO) {
-    return await this.repository.create({
-      title,
-      description,
-      status,
-      projectId,
-      assigneeId,
-    });
+  async create(payload: CreateTaskDTO) {
+    return await this.repository.create(payload);
   }
 
-  async update({ id, title, description, status, assigneeId }: UpdateTaskDTO) {
-    const task = await this.repository.find(id);
+  async update(payload: UpdateTaskDTO) {
+    const task = await this.repository.find({ id: payload.id });
 
     if (!task) {
-      throw new NotFoundException(`Task with id ${id} not found!`);
+      throw new NotFoundException(`Task with id ${payload.id} not found!`);
     }
 
-    return await this.repository.update(id, {
-      title,
-      description,
-      status,
-      assigneeId,
-    });
+    return await this.repository.update(payload);
   }
 
-  async delete({ id }: DeleteTaskDTO) {
-    const task = await this.repository.find(id);
+  async delete(payload: DeleteTaskDTO) {
+    const task = await this.repository.find(payload);
 
     if (!task) {
-      throw new NotFoundException(`Task with id ${id} not found!`);
+      throw new NotFoundException(`Task with id ${payload.id} not found!`);
     }
 
-    await this.repository.delete(id);
+    await this.repository.delete(payload);
   }
 }
 

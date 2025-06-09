@@ -4,6 +4,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch ./app/start.ts",
+    "services:up": "docker compose -f infra/database/compose.yml up --build",
+    "services:down": "docker compose -f infra/database/compose.yml down",
+    "services:start": "docker compose -f infra/database/compose.yml start",
+    "services:stop": "docker compose -f infra/database/compose.yml stop",
     "prisma:generate": "prisma generate --schema=infra/database/prisma/schema",
     "prisma:migrate": "prisma migrate dev --schema=infra/database/prisma/schema",
     "prisma:reset": "prisma migrate reset --schema=infra/database/prisma/schema",

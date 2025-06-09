@@ -8,15 +8,19 @@ import { JwtService } from "./jwt.service";
 class AuthService {
   private readonly userRepository = new UserRepository();
 
-  async login({ email, password }: HandleLoginDTO) {
-    const user = await this.userRepository.findByEmail(email);
+  async login(payload: HandleLoginDTO) {
+    const user = await this.userRepository.findByEmail({
+      email: payload.email,
+    });
 
     if (!user) {
-      throw new NotFoundException(`User with email ${email} not found!`);
+      throw new NotFoundException(
+        `User with email ${payload.email} not found!`
+      );
     }
 
     const isPasswordValid = await HashService.comparePassword({
-      password,
+      password: payload.password,
       hashedPassword: user.password,
     });
 
