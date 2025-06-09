@@ -13,6 +13,7 @@ class ProjectRepository {
     return await this.db.project.findMany({
       include: {
         requirements: true,
+        prototypes: true,
         tasks: { include: { assignee: { select: { id: true, name: true } } } },
       },
     });
@@ -23,6 +24,7 @@ class ProjectRepository {
       where: { id },
       include: {
         requirements: true,
+        prototypes: true,
         tasks: { include: { assignee: { select: { id: true, name: true } } } },
       },
     });

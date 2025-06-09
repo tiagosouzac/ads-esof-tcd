@@ -1,4 +1,5 @@
 import { ProjectValidator } from "../validators/project.validator";
+import { PrototypeDTO } from "./prototype.dto";
 import { RequirementDTO } from "./requirement.dto";
 import { TaskDTO } from "./task.dto";
 
@@ -10,6 +11,7 @@ class ProjectDTO {
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
     public readonly requirements?: RequirementDTO[],
+    public readonly prototypes?: PrototypeDTO[],
     public readonly tasks?: TaskDTO[]
   ) {}
 }

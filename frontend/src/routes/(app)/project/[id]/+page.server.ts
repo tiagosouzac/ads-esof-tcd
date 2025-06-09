@@ -1,5 +1,6 @@
 import { ProjectService } from '$lib/services/project';
 import { RequirementService } from '$lib/services/requirement';
+import { PrototypeService } from '$lib/services/prototype';
 import { fail, isRedirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { HttpError } from '$lib/utils/http-error';
@@ -152,6 +153,145 @@ export const actions = {
 
 			return fail(500, {
 				data: { requirementId },
+				errors: {
+					form: ['Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.']
+				} as Record<string, string[]>
+			});
+		}
+	},
+	'create-prototype': async ({ request, params }) => {
+		const formData = await request.formData();
+		const name = formData.get('name')?.toString().trim() ?? '';
+		const link = formData.get('link')?.toString().trim() ?? '';
+
+		try {
+			const prototype = await PrototypeService.create({
+				name,
+				link,
+				projectId: Number(params.id)
+			});
+
+			return { prototype };
+		} catch (error) {
+			if (isRedirect(error)) {
+				throw error;
+			}
+
+			console.error('Error creating prototype:', error);
+
+			if (error instanceof HttpError) {
+				if (error.status === 422) {
+					return fail(422, {
+						data: { link },
+						errors: error.details as Record<string, string[]>
+					});
+				}
+
+				return fail(error.status, {
+					data: { link },
+					errors: {
+						form: [
+							error.details ||
+								error.message ||
+								'Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.'
+						]
+					} as Record<string, string[]>
+				});
+			}
+
+			return fail(500, {
+				data: { link },
+				errors: {
+					form: ['Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.']
+				} as Record<string, string[]>
+			});
+		}
+	},
+	'update-prototype': async ({ request, params }) => {
+		const formData = await request.formData();
+		const name = formData.get('name')?.toString().trim() ?? '';
+		const link = formData.get('link')?.toString().trim() ?? '';
+		const prototypeId = formData.get('prototypeId')?.toString().trim() ?? '';
+
+		try {
+			const prototype = await PrototypeService.update({
+				id: prototypeId,
+				name,
+				link,
+				projectId: Number(params.id)
+			});
+
+			return { prototype };
+		} catch (error) {
+			if (isRedirect(error)) {
+				throw error;
+			}
+
+			console.error('Error updating prototype:', error);
+
+			if (error instanceof HttpError) {
+				if (error.status === 422) {
+					return fail(422, {
+						data: { link },
+						errors: error.details as Record<string, string[]>
+					});
+				}
+
+				return fail(error.status, {
+					data: { link },
+					errors: {
+						form: [
+							error.details ||
+								error.message ||
+								'Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.'
+						]
+					} as Record<string, string[]>
+				});
+			}
+
+			return fail(500, {
+				data: { link },
+				errors: {
+					form: ['Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.']
+				} as Record<string, string[]>
+			});
+		}
+	},
+	'delete-prototype': async ({ request }) => {
+		const formData = await request.formData();
+		const prototypeId = formData.get('prototypeId')?.toString().trim() ?? '';
+
+		try {
+			await PrototypeService.delete({ id: prototypeId });
+		} catch (error) {
+			if (isRedirect(error)) {
+				throw error;
+			}
+
+			console.error('Error deleting prototype:', error);
+
+			if (error instanceof HttpError) {
+				if (error.status === 422) {
+					return fail(422, {
+						data: { prototypeId },
+						errors: error.details as Record<string, string[]>
+					});
+				}
+
+				return fail(error.status, {
+					data: { prototypeId },
+					errors: {
+						form: [
+							error.details ||
+								error.message ||
+								'Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.'
+						]
+					} as Record<string, string[]>
+				});
+			}
+
+			return fail(500, {
+				data: { prototypeId },
 				errors: {
 					form: ['Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.']
 				} as Record<string, string[]>

@@ -4,6 +4,7 @@ import { ProjectService } from "../services/project.service";
 import { ProjectDTO } from "../dtos/project.dto";
 import { RequirementDTO } from "../dtos/requirement.dto";
 import { TaskDTO } from "../dtos/task.dto";
+import { PrototypeDTO } from "../dtos/prototype.dto";
 
 class ProjectController {
   private readonly validator = new ProjectValidator();
@@ -31,6 +32,17 @@ class ProjectController {
                   requirement.projectId,
                   requirement.createdAt,
                   requirement.updatedAt
+                )
+            ),
+            project.prototypes.map(
+              (prototype) =>
+                new PrototypeDTO(
+                  prototype.id,
+                  prototype.name,
+                  prototype.link,
+                  prototype.projectId,
+                  prototype.createdAt,
+                  prototype.updatedAt
                 )
             ),
             project.tasks.map(
@@ -71,6 +83,17 @@ class ProjectController {
               requirement.projectId,
               requirement.createdAt,
               requirement.updatedAt
+            )
+        ),
+        project.prototypes.map(
+          (prototype) =>
+            new PrototypeDTO(
+              prototype.id,
+              prototype.name,
+              prototype.link,
+              prototype.projectId,
+              prototype.createdAt,
+              prototype.updatedAt
             )
         ),
         project.tasks.map(

@@ -7,6 +7,7 @@ model Project {
   updatedAt   DateTime @updatedAt
 
   requirements Requirement[]
+  prototypes   Prototype[]
   tasks        Task[]
   architectId  Int
 
