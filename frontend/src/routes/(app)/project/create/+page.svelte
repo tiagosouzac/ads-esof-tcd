@@ -3,6 +3,9 @@
 
 	const { form, data } = $props();
 	const architects = data?.architects || [];
+	const designers = data?.designers || [];
+	const developers = data?.developers || [];
+	const qualityAnalysts = data?.qualityAnalysts || [];
 </script>
 
 <div class="space-y-6">
@@ -15,5 +18,5 @@
 		</p>
 	</div>
 
-	<ProjectForm {form} {architects} />
+	<ProjectForm {form} {architects} {designers} {developers} {qualityAnalysts} />
 </div>

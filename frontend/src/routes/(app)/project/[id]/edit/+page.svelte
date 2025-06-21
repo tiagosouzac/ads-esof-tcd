@@ -14,5 +14,12 @@
 		</p>
 	</div>
 
-	<ProjectForm project={data.project} architects={data.architects} {form} />
+	<ProjectForm
+		project={data.project}
+		architects={data.architects}
+		designers={data.designers}
+		developers={data.developers}
+		qualityAnalysts={data.qualityAnalysts}
+		{form}
+	/>
 </div>

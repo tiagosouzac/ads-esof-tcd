@@ -15,8 +15,11 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Task    Task[]
-  Project Project[]
+  Task                     Task[]
+  ProjectsAsArchitect      Project[] @relation("ProjectArchitect")
+  ProjectsAsDesigner       Project[] @relation("ProjectDesigner")
+  ProjectsAsDeveloper      Project[] @relation("ProjectDeveloper")
+  ProjectsAsQualityAnalyst Project[] @relation("ProjectQualityAnalyst")
 
   @@map("users")
 }

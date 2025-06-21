@@ -1,15 +1,21 @@
 model Project {
-  id          Int      @id @default(autoincrement())
-  name        String   @unique
-  description String
-  architect   User     @relation(fields: [architectId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id             Int      @id @default(autoincrement())
+  name           String   @unique
+  description    String
+  architect      User     @relation("ProjectArchitect", fields: [architectId], references: [id])
+  designer       User     @relation("ProjectDesigner", fields: [designerId], references: [id])
+  developer      User     @relation("ProjectDeveloper", fields: [developerId], references: [id])
+  qualityAnalyst User     @relation("ProjectQualityAnalyst", fields: [qualityAnalystId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
-  requirements Requirement[]
-  prototypes   Prototype[]
-  tasks        Task[]
-  architectId  Int
+  requirements     Requirement[]
+  prototypes       Prototype[]
+  tasks            Task[]
+  architectId      Int
+  designerId       Int
+  developerId      Int
+  qualityAnalystId Int
 
   @@map("projects")
 }

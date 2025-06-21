@@ -23,6 +23,9 @@ class ProjectController {
             project.createdAt,
             project.updatedAt,
             project.architectId,
+            project.designerId,
+            project.developerId,
+            project.qualityAnalystId,
             project.requirements.map(
               (requirement) =>
                 new RequirementDTO(
@@ -75,6 +78,9 @@ class ProjectController {
         project.createdAt,
         project.updatedAt,
         project.architectId,
+        project.designerId,
+        project.developerId,
+        project.qualityAnalystId,
         project.requirements.map(
           (requirement) =>
             new RequirementDTO(
@@ -126,7 +132,10 @@ class ProjectController {
           project.name,
           project.description,
           project.createdAt,
-          project.updatedAt
+          project.updatedAt,
+          project.architectId,
+          project.designerId,
+          project.developerId
         )
       );
   }
@@ -147,7 +156,10 @@ class ProjectController {
           project.name,
           project.description,
           project.createdAt,
-          project.updatedAt
+          project.updatedAt,
+          project.architectId,
+          project.designerId,
+          project.developerId
         )
       );
   }

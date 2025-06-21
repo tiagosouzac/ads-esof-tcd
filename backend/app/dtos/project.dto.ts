@@ -11,6 +11,9 @@ class ProjectDTO {
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
     public readonly architectId?: number,
+    public readonly designerId?: number,
+    public readonly developerId?: number,
+    public readonly qualityAnalystId?: number,
     public readonly requirements?: RequirementDTO[],
     public readonly prototypes?: PrototypeDTO[],
     public readonly tasks?: TaskDTO[]

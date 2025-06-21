@@ -43,6 +43,9 @@ class ProjectRepository {
         name: data.name,
         description: data.description,
         architect: { connect: { id: data.architect } },
+        designer: { connect: { id: data.designer } },
+        developer: { connect: { id: data.developer } },
+        qualityAnalyst: { connect: { id: data.qualityAnalyst } },
       },
     });
   }
@@ -50,7 +53,14 @@ class ProjectRepository {
   async update({ id, ...data }: UpdateProjectDTO) {
     return await this.db.project.update({
       where: { id },
-      data: { name: data.name, description: data.description },
+      data: {
+        name: data.name,
+        description: data.description,
+        architectId: data.architect,
+        designerId: data.designer,
+        developerId: data.developer,
+        qualityAnalystId: data.qualityAnalyst,
+      },
     });
   }
 

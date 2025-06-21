@@ -7,6 +7,9 @@ class ProjectValidator {
     name: z.string().nonempty(),
     description: z.string().nonempty(),
     architect: z.number().int().positive(),
+    designer: z.number().int().positive(),
+    developer: z.number().int().positive(),
+    qualityAnalyst: z.number().int().positive(),
     createdAt: z.coerce.date().optional(),
     updatedAt: z.coerce.date().optional(),
   });

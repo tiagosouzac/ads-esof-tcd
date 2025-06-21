@@ -12,7 +12,10 @@ class Project {
 		public readonly prototypes: Prototype[],
 		public readonly createdAt: Date,
 		public readonly updatedAt: Date,
-		public readonly architectId?: string
+		public readonly architectId?: string,
+		public readonly designerId?: string,
+		public readonly developerId?: string,
+		public readonly qualityAnalystId?: string
 	) {}
 }
 
