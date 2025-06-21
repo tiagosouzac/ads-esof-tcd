@@ -14,6 +14,7 @@ class UserRoutes {
   public static getRoutes() {
     return this.routes
       .post("/", this.controller.create.bind(this.controller))
+      .get("/has-manager", this.controller.hasManager.bind(this.controller))
       .use(Auth.handle)
       .get("/", this.controller.list.bind(this.controller))
       .get("/me", this.controller.show.bind(this.controller))

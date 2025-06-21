@@ -10,6 +10,7 @@ class ProjectDTO {
     public readonly description: string,
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
+    public readonly architectId?: number,
     public readonly requirements?: RequirementDTO[],
     public readonly prototypes?: PrototypeDTO[],
     public readonly tasks?: TaskDTO[]

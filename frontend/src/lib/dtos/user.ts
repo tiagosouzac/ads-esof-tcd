@@ -11,4 +11,11 @@ type CreateUserDTO = {
 	role: Role;
 };
 
-export type { ListUserDTO, CreateUserDTO };
+type UpdateUserDTO = {
+	name?: string;
+	email?: string;
+	password?: string;
+	role?: Role;
+};
+
+export type { ListUserDTO, CreateUserDTO, UpdateUserDTO };

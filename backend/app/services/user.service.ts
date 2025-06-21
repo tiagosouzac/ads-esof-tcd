@@ -17,6 +17,14 @@ class UsersService {
   private readonly repository = new UserRepository();
   private systemConfigService = new SystemConfigService();
 
+  async hasManager() {
+    const config = await this.systemConfigService.find({
+      key: "FIRST_MANAGER_CREATED",
+    });
+
+    return (config?.value ?? "false") === "true";
+  }
+
   async list(payload: ListUserDTO) {
     return await this.repository.list(payload);
   }

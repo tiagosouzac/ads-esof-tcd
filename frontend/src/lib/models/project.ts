@@ -11,7 +11,8 @@ class Project {
 		public readonly tasks: Task[],
 		public readonly prototypes: Prototype[],
 		public readonly createdAt: Date,
-		public readonly updatedAt: Date
+		public readonly updatedAt: Date,
+		public readonly architectId?: string
 	) {}
 }
 

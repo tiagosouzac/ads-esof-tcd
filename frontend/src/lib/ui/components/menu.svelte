@@ -1,5 +1,9 @@
 <script>
-	import { ClipboardPen, Plus } from '@lucide/svelte';
+	import { ClipboardPen, Plus, Users } from '@lucide/svelte';
+	import { Role } from '$lib/models/user';
+
+	const { user } = $props();
+	const isAdmin = user?.role === Role.MANAGER;
 </script>
 
 <nav>
@@ -17,5 +21,14 @@
 				Criar projeto
 			</a>
 		</li>
+
+		{#if isAdmin}
+			<li>
+				<a class="flex items-center gap-1.5 hover:text-neutral-900" href="/admin/users">
+					<Users class="size-5" />
+					Usuários
+				</a>
+			</li>
+		{/if}
 	</ul>
 </nav>

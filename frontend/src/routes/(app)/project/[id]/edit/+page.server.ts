@@ -16,9 +16,10 @@ export const actions = {
 		const formData = await request.formData();
 		const name = formData.get('name')?.toString() ?? '';
 		const description = formData.get('description')?.toString() ?? '';
+		const architect = Number(formData.get('architect')?.toString() ?? '');
 
 		try {
-			const project = await ProjectService.update({ id: params.id, name, description });
+			const project = await ProjectService.update({ id: params.id, name, description, architect });
 			redirect(303, `/project/${project.id}`);
 		} catch (error) {
 			if (isRedirect(error)) {

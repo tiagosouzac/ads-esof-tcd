@@ -14,12 +14,5 @@
 		</p>
 	</div>
 
-	<ProjectForm
-		project={{
-			name: data.project.name,
-			description: data.project.description
-		}}
-		architects={data.architects}
-		{form}
-	/>
+	<ProjectForm project={data.project} architects={data.architects} {form} />
 </div>

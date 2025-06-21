@@ -12,11 +12,7 @@
 	</div>
 
 	<div class="flex items-center justify-between">
-		<ProjectStatus
-			status={project.status}
-			requirements={project.requirements}
-			tasks={project.tasks}
-		/>
+		<ProjectStatus requirements={project.requirements} tasks={project.tasks} />
 
 		<a class="flex items-center gap-1.5 hover:text-neutral-900" href="/project/1/edit">
 			<Edit class="size-4" />

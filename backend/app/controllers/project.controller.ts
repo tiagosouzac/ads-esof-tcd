@@ -22,6 +22,7 @@ class ProjectController {
             project.description,
             project.createdAt,
             project.updatedAt,
+            project.architectId,
             project.requirements.map(
               (requirement) =>
                 new RequirementDTO(
@@ -73,6 +74,7 @@ class ProjectController {
         project.description,
         project.createdAt,
         project.updatedAt,
+        project.architectId,
         project.requirements.map(
           (requirement) =>
             new RequirementDTO(

@@ -10,7 +10,7 @@
 	<Logo />
 
 	<div class="flex items-center gap-6">
-		<Menu />
+		<Menu {user} />
 		<User {user} />
 	</div>
 </header>

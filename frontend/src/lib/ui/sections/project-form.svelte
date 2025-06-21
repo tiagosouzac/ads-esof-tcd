@@ -5,8 +5,10 @@
 	import Textarea from '../components/textarea.svelte';
 	import Select from '../components/select.svelte';
 	import { User } from '$lib/models/user';
+	import type { Project } from '$lib/models/project';
 
-	const { project = { name: '', description: '' }, form, architects } = $props();
+	const { project, form, architects }: { project: Project; form: any; architects: User[] } =
+		$props();
 </script>
 
 <form method="POST" use:enhance>
@@ -37,7 +39,8 @@
 		name="architect"
 		label="Arquiteto responsável"
 		options={architects.map((a: User) => ({ value: a.id, label: a.name }))}
-		value={project.architect ?? ''}
+		value={project.architectId ?? ''}
+		selected={project.architectId ?? ''}
 		error={form?.errors?.architect?.[0]}
 		required
 	/>

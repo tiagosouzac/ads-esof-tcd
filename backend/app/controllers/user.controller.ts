@@ -7,6 +7,11 @@ class UserController {
   private readonly validator = new UserValidator();
   private readonly service = new UsersService();
 
+  async hasManager(_request: Request, response: Response) {
+    const exists = await this.service.hasManager();
+    response.status(200).json({ exists });
+  }
+
   async list(request: Request, response: Response) {
     const payload = this.validator.list(request.query);
     const users = await this.service.list(payload);

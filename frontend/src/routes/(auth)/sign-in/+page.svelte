@@ -52,10 +52,6 @@
 	</div>
 
 	<div class="text-sm text-neutral-500">
-		<span>Ainda não tem uma conta?</span>
-
-		<a href="/sign-up">
-			<strong>Cadastre-se</strong>
-		</a>
+		<span>Entre em contato com o administrador do sistema para obter acesso.</span>
 	</div>
 </div>

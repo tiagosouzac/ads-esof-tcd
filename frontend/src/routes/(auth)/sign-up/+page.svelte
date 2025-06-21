@@ -12,8 +12,14 @@
 
 	<div class="space-y-4">
 		<div class="space-y-1">
-			<h1>Bem-vindo!</h1>
-			<p>Crie sua conta para começar a gerenciar seus projetos de forma eficiente.</p>
+			<h1>Bem-vindo ao Sistema!</h1>
+			<p>
+				Esta página é apenas para o primeiro acesso. Crie sua conta de administrador para gerenciar
+				o sistema.
+			</p>
+			<p class="font-medium text-amber-600">
+				Importante: Após criar o primeiro administrador, esta página não ficará mais acessível.
+			</p>
 		</div>
 
 		<form method="POST" use:enhance>
@@ -50,7 +56,7 @@
 				minlength={8}
 			/>
 
-			<button class="btn w-44" type="submit">Criar conta</button>
+			<button class="btn w-44" type="submit">Criar conta de administrador</button>
 		</form>
 
 		{#if form?.errors.form}
