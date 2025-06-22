@@ -1,19 +1,25 @@
 <script>
 	import { Edit, ExternalLink } from '@lucide/svelte';
 	import PrototypeForm from '../sections/prototype-form.svelte';
+	import { UserService } from '$lib/services/user';
 
-	let { prototype, form } = $props();
+	let { prototype, form, user } = $props();
+
+	const canEditPrototypes = UserService.isDesigner(user);
 
 	let isEditing = $state(false);
 
 	function toggleEdit() {
+		if (!canEditPrototypes) return;
 		isEditing = !isEditing;
 	}
 </script>
 
 {#if !isEditing}
 	<div
-		class="group relative w-full rounded-md border p-6 transition-colors duration-200 hover:bg-neutral-50"
+		class="group relative w-full rounded-md border p-6 transition-colors duration-200 {canEditPrototypes
+			? 'hover:bg-neutral-50'
+			: ''}"
 	>
 		<div class="space-y-4">
 			<div class="space-y-1">
@@ -29,13 +35,15 @@
 						>
 							<ExternalLink class="size-4" />
 						</a>
-						<button
-							class="opacity-0 transition-opacity duration-200 hover:text-blue-600 group-hover:opacity-100"
-							onclick={toggleEdit}
-							title="Editar protótipo"
-						>
-							<Edit class="size-4" />
-						</button>
+						{#if canEditPrototypes}
+							<button
+								class="opacity-0 transition-opacity duration-200 hover:text-blue-600 group-hover:opacity-100"
+								onclick={toggleEdit}
+								title="Editar protótipo"
+							>
+								<Edit class="size-4" />
+							</button>
+						{/if}
 					</div>
 				</div>
 				<a

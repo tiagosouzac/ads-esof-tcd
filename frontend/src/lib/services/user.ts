@@ -1,6 +1,7 @@
 import { HttpClient } from '$lib/utils/http-client';
 import type { CreateUserDTO, ListUserDTO, UpdateUserDTO } from '$lib/dtos/user';
 import type { User } from '$lib/models/user';
+import { Role } from '$lib/models/user';
 
 class UserService {
 	static async list(payload?: ListUserDTO) {
@@ -40,6 +41,36 @@ class UserService {
 			console.error('Error checking if manager exists:', error);
 			return false;
 		}
+	}
+
+	static hasRole(user: User | null | undefined, role: Role | Role[]): boolean {
+		if (!user) return false;
+
+		if (Array.isArray(role)) {
+			return role.includes(user.role);
+		}
+
+		return user.role === role;
+	}
+
+	static isManager(user: User | null | undefined): boolean {
+		return this.hasRole(user, Role.MANAGER);
+	}
+
+	static isArchitect(user: User | null | undefined): boolean {
+		return this.hasRole(user, [Role.ARCHITECT, Role.MANAGER]);
+	}
+
+	static isDesigner(user: User | null | undefined): boolean {
+		return this.hasRole(user, [Role.DESIGNER, Role.MANAGER]);
+	}
+
+	static isDeveloper(user: User | null | undefined): boolean {
+		return this.hasRole(user, [Role.DEVELOPER, Role.MANAGER]);
+	}
+
+	static isQualityAnalyst(user: User | null | undefined): boolean {
+		return this.hasRole(user, [Role.QUALITY_ANALYST, Role.MANAGER]);
 	}
 }
 

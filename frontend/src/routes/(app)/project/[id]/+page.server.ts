@@ -9,14 +9,21 @@ import type { TaskStatus } from '$lib/models/task';
 import { TaskService } from '$lib/services/task';
 import { UserService } from '$lib/services/user';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, locals }) => {
 	const project = await ProjectService.find({ id: params.id });
 	const users = await UserService.list();
-	return { project, users };
+	return { project, users, user: locals.user };
 };
 
 export const actions = {
-	'create-requirement': async ({ request, params }) => {
+	'create-requirement': async ({ request, params, locals }) => {
+		if (!UserService.isArchitect(locals.user)) {
+			return fail(403, {
+				errors: {
+					form: ['Only architects and managers can add requirements.']
+				} as Record<string, string[]>
+			});
+		}
 		const formData = await request.formData();
 		const title = formData.get('title')?.toString().trim() ?? '';
 		const description = formData.get('description')?.toString().trim() ?? '';
@@ -66,7 +73,15 @@ export const actions = {
 			});
 		}
 	},
-	'update-requirement': async ({ request, params }) => {
+	'update-requirement': async ({ request, params, locals }) => {
+		if (!UserService.isArchitect(locals.user)) {
+			return fail(403, {
+				errors: {
+					form: ['Only architects and managers can modify requirements.']
+				} as Record<string, string[]>
+			});
+		}
+
 		const formData = await request.formData();
 		const title = formData.get('title')?.toString().trim() ?? '';
 		const description = formData.get('description')?.toString().trim() ?? '';
@@ -118,7 +133,15 @@ export const actions = {
 			});
 		}
 	},
-	'delete-requirement': async ({ request }) => {
+	'delete-requirement': async ({ request, locals }) => {
+		if (!UserService.isArchitect(locals.user)) {
+			return fail(403, {
+				errors: {
+					form: ['Only architects and managers can delete requirements.']
+				} as Record<string, string[]>
+			});
+		}
+
 		const formData = await request.formData();
 		const requirementId = formData.get('requirementId')?.toString().trim() ?? '';
 
@@ -159,7 +182,15 @@ export const actions = {
 			});
 		}
 	},
-	'create-prototype': async ({ request, params }) => {
+	'create-prototype': async ({ request, params, locals }) => {
+		if (!UserService.isDesigner(locals.user)) {
+			return fail(403, {
+				errors: {
+					form: ['Only designers and managers can add prototypes.']
+				} as Record<string, string[]>
+			});
+		}
+
 		const formData = await request.formData();
 		const name = formData.get('name')?.toString().trim() ?? '';
 		const link = formData.get('link')?.toString().trim() ?? '';
@@ -207,7 +238,15 @@ export const actions = {
 			});
 		}
 	},
-	'update-prototype': async ({ request, params }) => {
+	'update-prototype': async ({ request, params, locals }) => {
+		if (!UserService.isDesigner(locals.user)) {
+			return fail(403, {
+				errors: {
+					form: ['Only designers and managers can modify prototypes.']
+				} as Record<string, string[]>
+			});
+		}
+
 		const formData = await request.formData();
 		const name = formData.get('name')?.toString().trim() ?? '';
 		const link = formData.get('link')?.toString().trim() ?? '';
@@ -257,7 +296,15 @@ export const actions = {
 			});
 		}
 	},
-	'delete-prototype': async ({ request }) => {
+	'delete-prototype': async ({ request, locals }) => {
+		if (!UserService.isDesigner(locals.user)) {
+			return fail(403, {
+				errors: {
+					form: ['Only designers and managers can delete prototypes.']
+				} as Record<string, string[]>
+			});
+		}
+
 		const formData = await request.formData();
 		const prototypeId = formData.get('prototypeId')?.toString().trim() ?? '';
 
@@ -298,7 +345,15 @@ export const actions = {
 			});
 		}
 	},
-	'create-task': async ({ request, params }) => {
+	'create-task': async ({ request, params, locals }) => {
+		if (!UserService.isDeveloper(locals.user)) {
+			return fail(403, {
+				errors: {
+					form: ['Only developers and managers can add tasks.']
+				} as Record<string, string[]>
+			});
+		}
+
 		const formData = await request.formData();
 		const title = formData.get('title')?.toString().trim() ?? '';
 		const description = formData.get('description')?.toString().trim() ?? '';
@@ -350,7 +405,15 @@ export const actions = {
 			});
 		}
 	},
-	'update-task': async ({ request, params }) => {
+	'update-task': async ({ request, params, locals }) => {
+		if (!UserService.isDeveloper(locals.user)) {
+			return fail(403, {
+				errors: {
+					form: ['Only developers and managers can modify tasks.']
+				} as Record<string, string[]>
+			});
+		}
+
 		const formData = await request.formData();
 		const title = formData.get('title')?.toString().trim() ?? '';
 		const description = formData.get('description')?.toString().trim() ?? '';
@@ -404,7 +467,15 @@ export const actions = {
 			});
 		}
 	},
-	'delete-task': async ({ request }) => {
+	'delete-task': async ({ request, locals }) => {
+		if (!UserService.isDeveloper(locals.user)) {
+			return fail(403, {
+				errors: {
+					form: ['Only developers and managers can delete tasks.']
+				} as Record<string, string[]>
+			});
+		}
+
 		const formData = await request.formData();
 		const taskId = formData.get('taskId')?.toString().trim() ?? '';
 

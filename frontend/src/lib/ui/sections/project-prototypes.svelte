@@ -2,8 +2,11 @@
 	import { Plus } from '@lucide/svelte';
 	import Prototype from '../components/prototype.svelte';
 	import PrototypeForm from './prototype-form.svelte';
+	import { UserService } from '$lib/services/user';
 
-	const { prototypes = [], form } = $props();
+	const { prototypes = [], form, user } = $props();
+
+	const canEditPrototypes = UserService.isDesigner(user);
 
 	let creatingRequirement = $state(false);
 
@@ -30,7 +33,7 @@
 			<ul class="space-y-1.5">
 				{#each prototypes as prototype}
 					<li>
-						<Prototype {prototype} {form} />
+						<Prototype {prototype} {form} {user} />
 					</li>
 				{/each}
 			</ul>
@@ -47,7 +50,7 @@
 			</div>
 		{/if}
 
-		{#if !creatingRequirement}
+		{#if !creatingRequirement && canEditPrototypes}
 			<button class="btn" onclick={togglePrototypeForm}>
 				<Plus />
 				Adicionar protótipo

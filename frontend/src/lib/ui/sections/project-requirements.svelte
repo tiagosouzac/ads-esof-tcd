@@ -2,8 +2,11 @@
 	import { Plus } from '@lucide/svelte';
 	import Requirement from '../components/requirement.svelte';
 	import RequirementForm from './requirement-form.svelte';
+	import { UserService } from '$lib/services/user';
 
-	const { requirements = [], form } = $props();
+	const { requirements = [], form, user } = $props();
+
+	const canEditRequirements = UserService.isArchitect(user);
 
 	let creatingRequirement = $state(false);
 
@@ -30,7 +33,7 @@
 			<ul class="space-y-1.5">
 				{#each requirements as requirement}
 					<li>
-						<Requirement {requirement} {form} />
+						<Requirement {requirement} {form} {user} />
 					</li>
 				{/each}
 			</ul>
@@ -47,7 +50,7 @@
 			</div>
 		{/if}
 
-		{#if !creatingRequirement}
+		{#if !creatingRequirement && canEditRequirements}
 			<button class="btn" onclick={toggleRequirementForm}>
 				<Plus />
 				Adicionar requisito

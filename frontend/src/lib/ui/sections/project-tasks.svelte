@@ -2,8 +2,11 @@
 	import { Plus } from '@lucide/svelte';
 	import Task from '../components/task.svelte';
 	import TaskForm from './task-form.svelte';
+	import { UserService } from '$lib/services/user';
 
-	const { tasks = [], users, form } = $props();
+	const { tasks = [], users, form, user } = $props();
+
+	const canEditTasks = UserService.isDeveloper(user);
 
 	let creatingTask = $state(false);
 
@@ -30,7 +33,7 @@
 			<ul class="space-y-1.5">
 				{#each tasks as task}
 					<li>
-						<Task {task} {users} {form} />
+						<Task {task} {users} {form} {user} />
 					</li>
 				{/each}
 			</ul>
@@ -47,7 +50,7 @@
 			</div>
 		{/if}
 
-		{#if !creatingTask}
+		{#if !creatingTask && canEditTasks}
 			<button class="btn" onclick={toggleTaskForm}>
 				<Plus />
 				Adicionar tarefa

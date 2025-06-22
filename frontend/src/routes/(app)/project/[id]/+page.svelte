@@ -8,6 +8,6 @@
 </script>
 
 <ProjectDetails project={data.project} />
-<ProjectRequirements requirements={data.project.requirements} {form} />
-<ProjectPrototypes prototypes={data.project.prototypes} {form} />
-<ProjectTasks tasks={data.project.tasks} users={data.users} {form} />
+<ProjectRequirements requirements={data.project.requirements} {form} user={data.user} />
+<ProjectPrototypes prototypes={data.project.prototypes} {form} user={data.user} />
+<ProjectTasks tasks={data.project.tasks} users={data.users} {form} user={data.user} />

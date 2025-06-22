@@ -2,19 +2,25 @@
 	import { Edit, User } from '@lucide/svelte';
 	import Status from './status.svelte';
 	import TaskForm from '../sections/task-form.svelte';
+	import { UserService } from '$lib/services/user';
 
-	let { task, users, form } = $props();
+	let { task, users, form, user } = $props();
+
+	const canEditTasks = UserService.isDeveloper(user);
 
 	let isEditing = $state(false);
 
 	function toggleEdit() {
+		if (!canEditTasks) return;
 		isEditing = !isEditing;
 	}
 </script>
 
 {#if !isEditing}
 	<button
-		class="group relative w-full cursor-pointer rounded-md border p-6 text-left transition-colors duration-200 hover:bg-neutral-50"
+		class="group relative w-full cursor-pointer rounded-md border p-6 text-left transition-colors duration-200 {canEditTasks
+			? 'hover:bg-neutral-50'
+			: ''}"
 		onclick={toggleEdit}
 	>
 		<div class="space-y-4">
@@ -35,9 +41,11 @@
 			</div>
 		</div>
 
-		<Edit
-			class="absolute right-3 top-3 size-5 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-		/>
+		{#if canEditTasks}
+			<Edit
+				class="absolute right-3 top-3 size-5 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+			/>
+		{/if}
 	</button>
 {:else}
 	<div class="space-y-4 rounded-md border p-6">
