@@ -30,7 +30,7 @@
 				</p>
 			{/if}
 		{:else}
-			<ul class="space-y-1.5">
+			<ul class="prototype-list space-y-1.5">
 				{#each prototypes as prototype}
 					<li>
 						<Prototype {prototype} {form} {user} />

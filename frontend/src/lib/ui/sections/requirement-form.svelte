@@ -13,6 +13,7 @@
 </script>
 
 <form
+	class="requirement-form"
 	method="POST"
 	use:enhance={() => {
 		return async ({ result, update }) => {

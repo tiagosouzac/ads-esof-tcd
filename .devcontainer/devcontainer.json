@@ -19,5 +19,9 @@
         "svelte.svelte-vscode"
       ]
     }
-  }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite": {}
+  },
+  "forwardPorts": [6080, 5901]
 }

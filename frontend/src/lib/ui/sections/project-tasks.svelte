@@ -30,7 +30,7 @@
 				</p>
 			{/if}
 		{:else}
-			<ul class="space-y-1.5">
+			<ul class="task-list space-y-1.5">
 				{#each tasks as task}
 					<li>
 						<Task {task} {users} {form} {user} />

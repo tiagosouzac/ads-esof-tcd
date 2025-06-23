@@ -43,6 +43,13 @@ async function seedDatabase() {
       },
     ],
   });
+
+  await prisma.systemConfig.create({
+    data: {
+      key: "FIRST_MANAGER_CREATED",
+      value: "true",
+    },
+  });
 }
 
 seedDatabase()

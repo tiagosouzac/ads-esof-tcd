@@ -7,6 +7,7 @@
 </script>
 
 <form
+	class="prototype-form"
 	method="POST"
 	use:enhance={() => {
 		return async ({ result, update }) => {

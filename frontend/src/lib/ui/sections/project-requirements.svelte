@@ -30,7 +30,7 @@
 				</p>
 			{/if}
 		{:else}
-			<ul class="space-y-1.5">
+			<ul class="requirement-list space-y-1.5">
 				{#each requirements as requirement}
 					<li>
 						<Requirement {requirement} {form} {user} />

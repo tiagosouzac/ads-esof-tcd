@@ -14,6 +14,7 @@
 </script>
 
 <form
+	class="task-form"
 	method="POST"
 	use:enhance={() => {
 		return async ({ result, update }) => {
