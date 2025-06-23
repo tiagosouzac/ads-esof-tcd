@@ -4,8 +4,10 @@ import {
   UpdateRequirementDTO,
   DeleteRequirementDTO,
   ListRequirementDTO,
+  ApproveRequirementDTO,
 } from "../dtos/requirement.dto";
 import { NotFoundException } from "../exceptions/not-found.exception";
+import { UnauthorizedException } from "../exceptions/unauthorized.exception";
 import { RequirementRepository } from "../repositories/requirement.repository";
 
 class RequirementService {
@@ -53,6 +55,22 @@ class RequirementService {
     }
 
     await this.repository.delete(payload);
+  }
+
+  async approve(payload: ApproveRequirementDTO, userRole: string) {
+    if (userRole !== "MANAGER") {
+      throw new UnauthorizedException("Only managers can approve requirements");
+    }
+
+    const requirement = await this.repository.findById({ id: payload.id });
+
+    if (!requirement) {
+      throw new NotFoundException(
+        `Requirement with id ${payload.id} not found!`
+      );
+    }
+
+    return await this.repository.approve(payload);
   }
 }
 

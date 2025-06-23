@@ -16,6 +16,7 @@ class PrototypeRoutes {
       .get("/:id", this.controller.find.bind(this.controller))
       .post("/", this.controller.create.bind(this.controller))
       .put("/:id", this.controller.update.bind(this.controller))
+      .patch("/:id/approve", this.controller.approve.bind(this.controller))
       .delete("/:id", this.controller.delete.bind(this.controller));
   }
 }

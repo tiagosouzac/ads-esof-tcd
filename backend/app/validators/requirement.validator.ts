@@ -8,6 +8,9 @@ class RequirementValidator {
     description: z.string().optional(),
     projectId: z.coerce.number(),
     status: z.enum(["PENDING", "IN_PROGRESS", "COMPLETED"]),
+    isApproved: z
+      .enum(["PENDING", "APPROVED", "DISAPPROVED"])
+      .default("PENDING"),
     createdAt: z.coerce.date().optional(),
     updatedAt: z.coerce.date().optional(),
   });
@@ -64,6 +67,18 @@ class RequirementValidator {
   delete(payload: unknown) {
     const { success, data, error } = this.schema
       .pick({ id: true })
+      .safeParse(payload);
+
+    if (!success) {
+      throw new UnprocessableContentException(error.flatten().fieldErrors);
+    }
+
+    return data;
+  }
+
+  approve(payload: unknown) {
+    const { success, data, error } = this.schema
+      .pick({ id: true, isApproved: true })
       .safeParse(payload);
 
     if (!success) {

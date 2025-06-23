@@ -5,7 +5,7 @@ import { HttpResponse } from './http-response';
 interface FetchOptions {
 	url: string;
 	params?: Record<string, string>;
-	method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+	method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 	headers?: HeadersInit;
 	data?: FormData;
 	json?: Record<string, unknown>;
@@ -53,6 +53,10 @@ class HttpClient {
 
 	public static async delete<T = unknown>(options: Omit<FetchOptions, 'method'>) {
 		return this.fetch<T>({ ...options, method: 'DELETE' });
+	}
+
+	public static async patch<T = unknown>(options: Omit<FetchOptions, 'method'>) {
+		return this.fetch<T>({ ...options, method: 'PATCH' });
 	}
 
 	static addGlobalHeaders(headers: HeadersInit) {

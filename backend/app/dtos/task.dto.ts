@@ -7,6 +7,7 @@ class TaskDTO {
     public readonly description: string | null,
     public readonly status: string,
     public readonly assignee: { id: number; name: string } | null,
+    public readonly isApproved: string,
     public readonly createdAt: Date,
     public readonly updatedAt: Date
   ) {}
@@ -17,6 +18,7 @@ type FindTaskDTO = ReturnType<typeof TaskValidator.prototype.find>;
 type CreateTaskDTO = ReturnType<typeof TaskValidator.prototype.create>;
 type UpdateTaskDTO = ReturnType<typeof TaskValidator.prototype.update>;
 type DeleteTaskDTO = ReturnType<typeof TaskValidator.prototype.delete>;
+type ApproveTaskDTO = ReturnType<typeof TaskValidator.prototype.approve>;
 
 export {
   TaskDTO,
@@ -25,4 +27,5 @@ export {
   CreateTaskDTO,
   UpdateTaskDTO,
   DeleteTaskDTO,
+  ApproveTaskDTO,
 };

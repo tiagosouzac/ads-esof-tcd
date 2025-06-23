@@ -9,6 +9,7 @@ type GenerateJwtTokenDTO = {
   id: number;
   name: string;
   email: string;
+  role: string;
 };
 
 type VerifyJwtTokenDTO = {

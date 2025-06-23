@@ -1,5 +1,6 @@
 import { Database } from "../../config/database";
 import {
+  ApproveTaskDTO,
   CreateTaskDTO,
   DeleteTaskDTO,
   FindTaskDTO,
@@ -41,6 +42,14 @@ class TaskRepository {
 
   async delete({ id }: DeleteTaskDTO) {
     return await this.db.task.delete({ where: { id } });
+  }
+
+  async approve({ id, isApproved }: ApproveTaskDTO) {
+    return await this.db.task.update({
+      where: { id },
+      data: { isApproved },
+      include: { assignee: { select: { id: true, name: true } } },
+    });
   }
 }
 

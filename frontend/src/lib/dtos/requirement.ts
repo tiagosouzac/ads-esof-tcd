@@ -1,3 +1,4 @@
+import type { ApprovalStatus } from '$lib/models/approval_status';
 import type { RequirementStatus } from '$lib/models/requirement';
 
 type CreateRequirementDTO = {
@@ -15,4 +16,14 @@ type DeleteRequirementDTO = {
 	id: string;
 };
 
-export type { CreateRequirementDTO, UpdateRequirementDTO, DeleteRequirementDTO };
+type ApproveRequirementDTO = {
+	id: string;
+	isApproved: ApprovalStatus;
+};
+
+export type {
+	CreateRequirementDTO,
+	UpdateRequirementDTO,
+	DeleteRequirementDTO,
+	ApproveRequirementDTO
+};

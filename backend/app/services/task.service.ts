@@ -1,4 +1,5 @@
 import {
+  ApproveTaskDTO,
   CreateTaskDTO,
   DeleteTaskDTO,
   FindTaskDTO,
@@ -6,6 +7,7 @@ import {
   UpdateTaskDTO,
 } from "../dtos/task.dto";
 import { NotFoundException } from "../exceptions/not-found.exception";
+import { UnauthorizedException } from "../exceptions/unauthorized.exception";
 import { TaskRepository } from "../repositories/task.repository";
 
 class TaskService {
@@ -47,6 +49,22 @@ class TaskService {
     }
 
     await this.repository.delete(payload);
+  }
+
+  async approve(payload: ApproveTaskDTO, userRole: string) {
+    if (userRole !== "MANAGER" && userRole !== "QUALITY_ANALYST") {
+      throw new UnauthorizedException(
+        "Only managers and quality analysts can approve tasks"
+      );
+    }
+
+    const task = await this.repository.find({ id: payload.id });
+
+    if (!task) {
+      throw new NotFoundException(`Task with id ${payload.id} not found!`);
+    }
+
+    return await this.repository.approve(payload);
   }
 }
 

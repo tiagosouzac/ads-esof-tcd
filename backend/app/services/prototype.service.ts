@@ -5,8 +5,10 @@ import {
   FindPrototypeDTO,
   DeletePrototypeDTO,
   ListPrototypeDTO,
+  ApprovePrototypeDTO,
 } from "../dtos/prototype.dto";
 import { NotFoundException } from "../exceptions/not-found.exception";
+import { UnauthorizedException } from "../exceptions/unauthorized.exception";
 
 class PrototypeService {
   private readonly repository = new PrototypeRepository();
@@ -47,6 +49,20 @@ class PrototypeService {
     }
 
     await this.repository.delete(payload);
+  }
+
+  async approve(payload: ApprovePrototypeDTO, userRole: string) {
+    if (userRole !== "MANAGER") {
+      throw new UnauthorizedException("Only managers can approve prototypes");
+    }
+
+    const prototype = await this.repository.findById({ id: payload.id });
+
+    if (!prototype) {
+      throw new NotFoundException(`Prototype with id ${payload.id} not found!`);
+    }
+
+    return await this.repository.approve(payload);
   }
 }
 

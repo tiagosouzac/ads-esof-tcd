@@ -81,7 +81,7 @@
 
 	<div class="flex items-center justify-between gap-3">
 		<div class="flex items-center gap-1.5">
-			{#if task.id !== ''}
+			{#if 'id' in task}
 				<button class="btn" type="submit" formaction="?/update-task">
 					<Save />
 					Salvar alterações

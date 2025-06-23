@@ -1,12 +1,14 @@
 <script>
-	import { Edit, User } from '@lucide/svelte';
+	import { Check, Edit, User, X } from '@lucide/svelte';
 	import Status from './status.svelte';
 	import TaskForm from '../sections/task-form.svelte';
 	import { UserService } from '$lib/services/user';
+	import { enhance } from '$app/forms';
 
 	let { task, users, form, user } = $props();
 
 	const canEditTasks = UserService.isDeveloper(user);
+	const canApproveTasks = UserService.isQualityAnalyst(user) || UserService.isManager(user);
 
 	let isEditing = $state(false);
 
@@ -17,11 +19,10 @@
 </script>
 
 {#if !isEditing}
-	<button
-		class="group relative w-full cursor-pointer rounded-md border p-6 text-left transition-colors duration-200 {canEditTasks
+	<div
+		class="group relative w-full cursor-default rounded-md border p-6 text-left transition-colors duration-200 {canEditTasks
 			? 'hover:bg-neutral-50'
 			: ''}"
-		onclick={toggleEdit}
 	>
 		<div class="space-y-4">
 			<div class="space-y-1">
@@ -41,12 +42,52 @@
 			</div>
 		</div>
 
-		{#if canEditTasks}
-			<Edit
-				class="absolute right-3 top-3 size-5 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-			/>
-		{/if}
-	</button>
+		<div
+			class="absolute right-3 top-3 flex gap-2 {canEditTasks || canApproveTasks
+				? 'opacity-0 transition-opacity duration-200 group-hover:opacity-100'
+				: ''}"
+		>
+			{#if canApproveTasks}
+				<form method="POST" use:enhance>
+					<input type="hidden" name="taskId" value={task.id} />
+
+					<button
+						class={[
+							'cursor-pointer transition-colors duration-200 hover:text-green-600',
+							task.isApproved === 'APPROVED' && 'text-green-600'
+						]}
+						formaction="?/approve-task"
+						type="submit"
+					>
+						<Check class="size-5" />
+						<div class="sr-only">Aprovar</div>
+					</button>
+				</form>
+
+				<form method="POST" use:enhance>
+					<input type="hidden" name="taskId" value={task.id} />
+
+					<button
+						class={[
+							'cursor-pointer transition-colors duration-200 hover:text-red-600',
+							task.isApproved === 'DISAPPROVED' && 'text-red-600'
+						]}
+						formaction="?/reject-task"
+						type="submit"
+					>
+						<X class="size-5 rotate-180" />
+						<div class="sr-only">Rejeitar</div>
+					</button>
+				</form>
+			{/if}
+
+			{#if canEditTasks}
+				<button class="cursor-pointer" onclick={() => toggleEdit()}>
+					<Edit class="size-5" />
+				</button>
+			{/if}
+		</div>
+	</div>
 {:else}
 	<div class="space-y-4 rounded-md border p-6">
 		<div>

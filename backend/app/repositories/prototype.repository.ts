@@ -5,6 +5,7 @@ import {
   FindPrototypeDTO,
   DeletePrototypeDTO,
   ListPrototypeDTO,
+  ApprovePrototypeDTO,
 } from "../dtos/prototype.dto";
 
 class PrototypeRepository {
@@ -28,6 +29,13 @@ class PrototypeRepository {
 
   async delete({ id }: DeletePrototypeDTO) {
     return await this.db.prototype.delete({ where: { id } });
+  }
+
+  async approve({ id, isApproved }: ApprovePrototypeDTO) {
+    return await this.db.prototype.update({
+      where: { id },
+      data: { isApproved },
+    });
   }
 }
 
