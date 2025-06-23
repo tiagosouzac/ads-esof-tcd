@@ -9,6 +9,9 @@ class TaskValidator {
     status: z.enum(["PENDING", "IN_PROGRESS", "COMPLETED"]),
     projectId: z.coerce.number().int().positive(),
     assigneeId: z.number().nullable(),
+    isApproved: z
+      .enum(["PENDING", "APPROVED", "DISAPPROVED"])
+      .default("PENDING"),
     createdAt: z.coerce.date(),
     updatedAt: z.coerce.date(),
   });
@@ -70,6 +73,18 @@ class TaskValidator {
   delete(payload: unknown) {
     const { success, error, data } = this.schema
       .pick({ id: true })
+      .safeParse(payload);
+
+    if (!success) {
+      throw new UnprocessableContentException(error.flatten().fieldErrors);
+    }
+
+    return data;
+  }
+
+  approve(payload: unknown) {
+    const { success, error, data } = this.schema
+      .pick({ id: true, isApproved: true })
       .safeParse(payload);
 
     if (!success) {

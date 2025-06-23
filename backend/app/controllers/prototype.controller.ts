@@ -21,6 +21,7 @@ class PrototypeController {
               prototype.name,
               prototype.link,
               prototype.projectId,
+              prototype.isApproved || false,
               prototype.createdAt,
               prototype.updatedAt
             )
@@ -40,6 +41,7 @@ class PrototypeController {
           prototype.name,
           prototype.link,
           prototype.projectId,
+          prototype.isApproved || false,
           prototype.createdAt,
           prototype.updatedAt
         )
@@ -58,6 +60,7 @@ class PrototypeController {
           prototype.name,
           prototype.link,
           prototype.projectId,
+          prototype.isApproved || false,
           prototype.createdAt,
           prototype.updatedAt
         )
@@ -80,6 +83,7 @@ class PrototypeController {
           prototype.name,
           prototype.link,
           prototype.projectId,
+          prototype.isApproved || false,
           prototype.createdAt,
           prototype.updatedAt
         )
@@ -90,6 +94,29 @@ class PrototypeController {
     const payload = this.validator.delete(request.params);
     await this.service.delete(payload);
     response.status(204).send();
+  }
+
+  async approve(request: Request, response: Response) {
+    const payload = this.validator.approve({
+      id: request.params.id,
+      isApproved: request.body.isApproved,
+    });
+
+    const prototype = await this.service.approve(payload, request.user!.role);
+
+    response
+      .status(200)
+      .json(
+        new PrototypeDTO(
+          prototype.id,
+          prototype.name,
+          prototype.link,
+          prototype.projectId,
+          prototype.isApproved,
+          prototype.createdAt,
+          prototype.updatedAt
+        )
+      );
   }
 }
 

@@ -7,6 +7,7 @@ class RequirementDTO {
     public readonly description: string | null,
     public readonly status: string,
     public readonly projectId: number,
+    public readonly isApproved: string,
     public readonly createdAt: Date,
     public readonly updatedAt: Date
   ) {}
@@ -32,6 +33,10 @@ type DeleteRequirementDTO = ReturnType<
   typeof RequirementValidator.prototype.delete
 >;
 
+type ApproveRequirementDTO = ReturnType<
+  typeof RequirementValidator.prototype.approve
+>;
+
 export {
   RequirementDTO,
   ListRequirementDTO,
@@ -39,4 +44,5 @@ export {
   CreateRequirementDTO,
   UpdateRequirementDTO,
   DeleteRequirementDTO,
+  ApproveRequirementDTO,
 };

@@ -3,7 +3,8 @@ import type {
 	FindPrototypeDTO,
 	CreatePrototypeDTO,
 	UpdatePrototypeDTO,
-	DeletePrototypeDTO
+	DeletePrototypeDTO,
+	ApprovePrototypeDTO
 } from '$lib/dtos/prototype';
 import type { Prototype } from '$lib/models/prototype';
 import { HttpClient } from '$lib/utils/http-client';
@@ -47,6 +48,15 @@ class PrototypeService {
 		await HttpClient.delete({
 			url: `/prototypes/${id}`
 		});
+	}
+
+	static async approve({ id, isApproved }: ApprovePrototypeDTO) {
+		const response = await HttpClient.patch<Prototype>({
+			url: `/prototypes/${id}/approve`,
+			json: { isApproved }
+		});
+
+		return response.data;
 	}
 }
 

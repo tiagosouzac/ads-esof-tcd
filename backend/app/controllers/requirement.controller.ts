@@ -22,6 +22,7 @@ class RequirementController {
               requirement.description,
               requirement.status,
               requirement.projectId,
+              requirement.isApproved || false,
               requirement.createdAt,
               requirement.updatedAt
             )
@@ -42,6 +43,7 @@ class RequirementController {
           requirement.description,
           requirement.status,
           requirement.projectId,
+          requirement.isApproved || false,
           requirement.createdAt,
           requirement.updatedAt
         )
@@ -61,6 +63,7 @@ class RequirementController {
           requirement.description,
           requirement.status,
           requirement.projectId,
+          requirement.isApproved || false,
           requirement.createdAt,
           requirement.updatedAt
         )
@@ -84,6 +87,7 @@ class RequirementController {
           requirement.description,
           requirement.status,
           requirement.projectId,
+          requirement.isApproved || false,
           requirement.createdAt,
           requirement.updatedAt
         )
@@ -94,6 +98,30 @@ class RequirementController {
     const payload = this.validator.delete(request.params);
     await this.service.delete(payload);
     response.status(204).send();
+  }
+
+  async approve(request: Request, response: Response) {
+    const payload = this.validator.approve({
+      id: request.params.id,
+      isApproved: request.body.isApproved,
+    });
+
+    const requirement = await this.service.approve(payload, request.user!.role);
+
+    response
+      .status(200)
+      .json(
+        new RequirementDTO(
+          requirement.id,
+          requirement.title,
+          requirement.description,
+          requirement.status,
+          requirement.projectId,
+          requirement.isApproved,
+          requirement.createdAt,
+          requirement.updatedAt
+        )
+      );
   }
 }
 

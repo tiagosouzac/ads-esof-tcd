@@ -1,4 +1,5 @@
 import type { TaskStatus } from '$lib/models/task';
+import type { ApprovalStatus } from '$lib/models/approval_status';
 
 type CreateTaskDTO = {
 	title: string;
@@ -16,4 +17,9 @@ type DeleteTaskDTO = {
 	id: string;
 };
 
-export type { CreateTaskDTO, UpdateTaskDTO, DeleteTaskDTO };
+type ApproveTaskDTO = {
+	id: string;
+	isApproved: ApprovalStatus;
+};
+
+export type { CreateTaskDTO, UpdateTaskDTO, DeleteTaskDTO, ApproveTaskDTO };

@@ -6,6 +6,7 @@ class PrototypeDTO {
     public readonly name: string,
     public readonly link: string,
     public readonly projectId: number | null,
+    public readonly isApproved: string,
     public readonly createdAt: Date,
     public readonly updatedAt: Date
   ) {}
@@ -27,6 +28,10 @@ type DeletePrototypeDTO = ReturnType<
   typeof PrototypeValidator.prototype.delete
 >;
 
+type ApprovePrototypeDTO = ReturnType<
+  typeof PrototypeValidator.prototype.approve
+>;
+
 export {
   PrototypeDTO,
   ListPrototypeDTO,
@@ -34,4 +39,5 @@ export {
   CreatePrototypeDTO,
   UpdatePrototypeDTO,
   DeletePrototypeDTO,
+  ApprovePrototypeDTO,
 };

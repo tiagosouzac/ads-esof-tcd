@@ -9,6 +9,7 @@ declare global {
         id: number;
         name: string;
         email: string;
+        role: string;
       };
     }
   }
@@ -31,6 +32,7 @@ class Auth {
       id: payload.id,
       name: payload.name,
       email: payload.email,
+      role: payload.role,
     };
 
     next();

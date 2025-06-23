@@ -4,11 +4,11 @@ import { UnauthorizedException } from "../exceptions/unauthorized.exception";
 import { GenerateJwtTokenDTO, VerifyJwtTokenDTO } from "../dtos/jwt.dto";
 
 class JwtService {
-  static generateToken({ id, name, email }: GenerateJwtTokenDTO) {
+  static generateToken({ id, name, email, role }: GenerateJwtTokenDTO) {
     const secret = Env.get("JWT_SECRET");
     const expiresIn = Env.get("JWT_EXPIRATION");
 
-    const value = jwt.sign({ id, name, email }, secret, {
+    const value = jwt.sign({ id, name, email, role }, secret, {
       expiresIn: expiresIn / 1000,
     });
 

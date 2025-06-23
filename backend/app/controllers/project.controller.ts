@@ -34,6 +34,7 @@ class ProjectController {
                   requirement.description,
                   requirement.status,
                   requirement.projectId,
+                  requirement.isApproved,
                   requirement.createdAt,
                   requirement.updatedAt
                 )
@@ -45,6 +46,7 @@ class ProjectController {
                   prototype.name,
                   prototype.link,
                   prototype.projectId,
+                  prototype.isApproved,
                   prototype.createdAt,
                   prototype.updatedAt
                 )
@@ -57,6 +59,7 @@ class ProjectController {
                   task.description,
                   task.status,
                   task.assignee,
+                  task.isApproved || false,
                   task.createdAt,
                   task.updatedAt
                 )
@@ -89,6 +92,7 @@ class ProjectController {
               requirement.description,
               requirement.status,
               requirement.projectId,
+              requirement.isApproved,
               requirement.createdAt,
               requirement.updatedAt
             )
@@ -100,6 +104,7 @@ class ProjectController {
               prototype.name,
               prototype.link,
               prototype.projectId,
+              prototype.isApproved,
               prototype.createdAt,
               prototype.updatedAt
             )
@@ -112,6 +117,7 @@ class ProjectController {
               task.description,
               task.status,
               task.assignee,
+              task.isApproved || false,
               task.createdAt,
               task.updatedAt
             )

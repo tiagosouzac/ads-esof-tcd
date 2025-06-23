@@ -5,6 +5,7 @@ import {
   FindRequirementDTO,
   ListRequirementDTO,
   UpdateRequirementDTO,
+  ApproveRequirementDTO,
 } from "../dtos/requirement.dto";
 
 class RequirementRepository {
@@ -28,6 +29,13 @@ class RequirementRepository {
 
   async delete({ id }: DeleteRequirementDTO) {
     return await this.db.requirement.delete({ where: { id } });
+  }
+
+  async approve({ id, isApproved }: ApproveRequirementDTO) {
+    return await this.db.requirement.update({
+      where: { id },
+      data: { isApproved },
+    });
   }
 }
 

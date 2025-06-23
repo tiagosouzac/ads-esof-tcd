@@ -1,4 +1,4 @@
-import type { CreateTaskDTO, DeleteTaskDTO, UpdateTaskDTO } from '$lib/dtos/task';
+import type { ApproveTaskDTO, CreateTaskDTO, DeleteTaskDTO, UpdateTaskDTO } from '$lib/dtos/task';
 import type { Task } from '$lib/models/task';
 import { HttpClient } from '$lib/utils/http-client';
 
@@ -23,6 +23,15 @@ class TaskService {
 
 	static async delete({ id }: DeleteTaskDTO) {
 		await HttpClient.delete({ url: `/tasks/${id}` });
+	}
+
+	static async approve({ id, isApproved }: ApproveTaskDTO) {
+		const response = await HttpClient.patch<Task>({
+			url: `/tasks/${id}/approve`,
+			json: { isApproved }
+		});
+
+		return response.data;
 	}
 }
 

@@ -22,6 +22,7 @@ class TaskController {
               task.description,
               task.status,
               task.assignee,
+              task.isApproved || false,
               task.createdAt,
               task.updatedAt
             )
@@ -42,6 +43,7 @@ class TaskController {
           task.description,
           task.status,
           task.assignee,
+          task.isApproved || false,
           task.createdAt,
           task.updatedAt
         )
@@ -61,6 +63,7 @@ class TaskController {
           task.description,
           task.status,
           task.assignee,
+          task.isApproved || false,
           task.createdAt,
           task.updatedAt
         )
@@ -84,6 +87,7 @@ class TaskController {
           task.description,
           task.status,
           task.assignee,
+          task.isApproved || false,
           task.createdAt,
           task.updatedAt
         )
@@ -94,6 +98,30 @@ class TaskController {
     const payload = this.validator.delete(request.params);
     await this.service.delete(payload);
     response.status(204).send();
+  }
+
+  async approve(request: Request, response: Response) {
+    const payload = this.validator.approve({
+      id: request.params.id,
+      isApproved: request.body.isApproved,
+    });
+
+    const task = await this.service.approve(payload, request.user!.role);
+
+    response
+      .status(200)
+      .json(
+        new TaskDTO(
+          task.id,
+          task.title,
+          task.description,
+          task.status,
+          task.assignee,
+          task.isApproved,
+          task.createdAt,
+          task.updatedAt
+        )
+      );
   }
 }
 
