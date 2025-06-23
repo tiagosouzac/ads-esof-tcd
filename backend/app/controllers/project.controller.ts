@@ -141,7 +141,8 @@ class ProjectController {
           project.updatedAt,
           project.architectId,
           project.designerId,
-          project.developerId
+          project.developerId,
+          project.qualityAnalystId
         )
       );
   }
@@ -165,7 +166,8 @@ class ProjectController {
           project.updatedAt,
           project.architectId,
           project.designerId,
-          project.developerId
+          project.developerId,
+          project.qualityAnalystId
         )
       );
   }

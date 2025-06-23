@@ -17,7 +17,11 @@ class Env {
       try {
         process.loadEnvFile();
         this.validate();
-        console.log("🌍 Environment variables loaded successfully!");
+
+        if (this.env.NODE_ENV !== "test") {
+          console.log("🌍 Environment variables loaded successfully!");
+        }
+        
         resolve();
       } catch (error) {
         console.error("❌ Failed to load environment variables:", error);

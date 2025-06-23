@@ -17,6 +17,10 @@ class App {
     this.app = express();
   }
 
+  getApp() {
+    return this.app;
+  }
+
   async init() {
     this.setupMiddlewares();
     this.setupRoutes();

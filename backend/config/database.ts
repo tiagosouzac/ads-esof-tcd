@@ -1,3 +1,4 @@
+import { env } from "process";
 import { PrismaClient } from "../infra/database/prisma/generated/prisma";
 
 class Database {
@@ -18,7 +19,10 @@ class Database {
 
     try {
       await client.$connect();
-      console.log("🎲 Database connected!");
+
+      if (env.NODE_ENV !== "test") {
+        console.log("🎲 Database connected!");
+      }
     } catch (error) {
       console.error("Error connecting to the database", error);
     }
